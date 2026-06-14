@@ -1,0 +1,8 @@
+{
+  "title": "RUL MLOps Pipeline Dashboard",
+  "uid": "rul-mlops-main",
+  "panels": [],
+  "schemaVersion": 38,
+  "version": 1,
+  "refresh": "10s"
+}
