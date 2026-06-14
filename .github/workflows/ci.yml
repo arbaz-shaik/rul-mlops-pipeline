@@ -24,6 +24,6 @@ jobs:
 
       - name: Run ruff linter
         run: ruff check src/ tests/ pipeline/ experiments/
-
+        
       - name: Run pytest
-        run: run: pytest tests/ -v --collect-only || true
+        run: "pytest tests/ -v --collect-only || true"
