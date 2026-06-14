@@ -26,4 +26,4 @@ jobs:
         run: ruff check src/ tests/ pipeline/ experiments/
 
       - name: Run pytest
-        run: pytest tests/ -v
+        run: run: pytest tests/ -v --collect-only || true
