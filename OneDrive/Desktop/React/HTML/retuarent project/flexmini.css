@@ -1,0 +1,29 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+section{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+header,main,footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+header{
+    height: 10vh;
+    background-color: lightgreen;
+    display: flex;
+    
+}
+main{
+    height: 80vh;
+    background-color: cadetblue;
+    flex-grow: 1;
+}
+footer{
+    height: 10vh;
+    background-color: violet;}

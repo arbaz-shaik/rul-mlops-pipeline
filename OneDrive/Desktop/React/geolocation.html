@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geolocation with Map</title>
+</head>
+<body>
+    
+    <button onclick="fetch_location()">Fetch Location</button>
+
+    <br><br>
+    <p id="res"></p>
+    <div id="map" style="height: 400px; width: 100%;"></div>
+
+    <script>
+        let fetch_location = () => {
+            window.navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    document.getElementById("res").innerHTML = `Latitude: ${latitude}<br>Longitude: ${longitude}`;
+                    
+                    loadMap(latitude, longitude);
+                },
+                (error) => {
+                    console.error("Error fetching location: ", error);
+                    document.getElementById("res").innerHTML = "Unable to retrieve location.";
+                }
+            );
+        }
+
+        let loadMap = (latitude, longitude) => {
+            const mapUrl = `https://maps.google.com/maps?q=${latitude},${longitude}&z=15&output=embed`;
+           
+            document.getElementById('map').innerHTML = `<iframe width="100%" height="400px" frameborder="0" src="${mapUrl}"></iframe>`;
+        }
+    </script>
+
+</body>
+</html>

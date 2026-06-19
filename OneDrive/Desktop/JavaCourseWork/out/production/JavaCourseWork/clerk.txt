@@ -1,0 +1,236 @@
+"C:\Program Files\Java\jdk-21\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2025.2.2\lib\idea_rt.jar=53359" -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 -classpath C:\Users\arbaz\OneDrive\Desktop\JavaCourseWork\out\production\JavaCourseWork MainProgram
+✅ Data loaded successfully.
+
+--- MENU ---
+f - Finish
+t - Display all tickets
+m - Display all members
+b - Buy tickets
+c - Cancel tickets
+Enter choice: m
+
+--- Member Information ---
+Member: Mark Jones
+  No tickets purchased.
+
+Member: Mark Smith
+  No tickets purchased.
+
+Member: Michael Jones
+  No tickets purchased.
+
+Member: Ted Smith
+  No tickets purchased.
+
+
+--- MENU ---
+f - Finish
+t - Display all tickets
+m - Display all members
+b - Buy tickets
+c - Cancel tickets
+Enter choice: t
+
+--- Ticket Information ---
+Fascinating Aida                    | Available: 5   | Price: £15.50
+Professor Elemental                 | Available: 11  | Price: £8.99
+Spooky Men                          | Available: 2   | Price: £10.99
+The Ukulele Orchestra of Great Britain | Available: 7   | Price: £25.30
+Weird Al                            | Available: 4   | Price: £28.99
+
+--- MENU ---
+f - Finish
+t - Display all tickets
+m - Display all members
+b - Buy tickets
+c - Cancel tickets
+Enter choice: b
+Enter member name (First Last): Ted Smith
+Enter ticket name: Spooky Men
+Enter quantity to buy: 2
+✅ Ted Smith bought 2 ticket(s) for Spooky Men
+
+--- MENU ---
+f - Finish
+t - Display all tickets
+m - Display all members
+b - Buy tickets
+c - Cancel tickets
+Enter choice: b
+Enter member name (First Last): Ted Smith
+Enter ticket name: The Ukulele Orchestra of Great Britain
+Enter quantity to buy: 3
+✅ Ted Smith bought 3 ticket(s) for The Ukulele Orchestra of Great Britain
+
+--- MENU ---
+f - Finish
+t - Display all tickets
+m - Display all members
+b - Buy tickets
+c - Cancel tickets
+Enter choice: b
+Enter member name (First Last): Ted Smith
+Enter ticket name: Weird Al
+Enter quantity to buy: 1
+✅ Ted Smith bought 1 ticket(s) for Weird Al
+
+--- MENU ---
+f - Finish
+t - Display all tickets
+m - Display all members
+b - Buy tickets
+c - Cancel tickets
+Enter choice: b
+Enter member name (First Last): Ted Smith
+Enter ticket name: Professor Elemental
+Enter quantity to buy: 1
+❌ Ted Smith already holds 3 types of tickets.
+
+--- MENU ---
+f - Finish
+t - Display all tickets
+m - Display all members
+b - Buy tickets
+c - Cancel tickets
+Enter choice: c
+Enter member name (First Last): Ted Smith
+Enter ticket name: Weird Al
+Enter quantity to cancel: 1
+↩️ Ted Smith cancelled 1 ticket(s) for Weird Al
+
+--- MENU ---
+f - Finish
+t - Display all tickets
+m - Display all members
+b - Buy tickets
+c - Cancel tickets
+Enter choice: b
+Enter member name (First Last): Ted Smith
+Enter ticket name: Professor Elemental
+Enter quantity to buy: 1
+✅ Ted Smith bought 1 ticket(s) for Professor Elemental
+
+--- MENU ---
+f - Finish
+t - Display all tickets
+m - Display all members
+b - Buy tickets
+c - Cancel tickets
+Enter choice: b
+Enter member name (First Last): Mark Jones
+Enter ticket name: Spooky Men
+Enter quantity to buy: 1
+❌ Not enough tickets available. Writing letter...
+
+--- MENU ---
+f - Finish
+t - Display all tickets
+m - Display all members
+b - Buy tickets
+c - Cancel tickets
+Enter choice: c
+Enter member name (First Last): Ted Smith
+Enter ticket name: Spooky Men
+Enter quantity to cancel: 1
+↩️ Ted Smith cancelled 1 ticket(s) for Spooky Men
+
+--- MENU ---
+f - Finish
+t - Display all tickets
+m - Display all members
+b - Buy tickets
+c - Cancel tickets
+Enter choice: b
+Enter member name (First Last): Mark Jones
+Enter ticket name: Spooky Men
+Enter quantity to buy: 1
+✅ Mark Jones bought 1 ticket(s) for Spooky Men
+
+--- MENU ---
+f - Finish
+t - Display all tickets
+m - Display all members
+b - Buy tickets
+c - Cancel tickets
+Enter choice: b
+Enter member name (First Last): Michael Jones
+Enter ticket name: 5
+❌ No such ticket.
+
+--- MENU ---
+f - Finish
+t - Display all tickets
+m - Display all members
+b - Buy tickets
+c - Cancel tickets
+Enter choice: b
+Enter member name (First Last): Michael Jones
+Enter ticket name: Fascinating Aida
+Enter quantity to buy: 5
+✅ Michael Jones bought 5 ticket(s) for Fascinating Aida
+
+--- MENU ---
+f - Finish
+t - Display all tickets
+m - Display all members
+b - Buy tickets
+c - Cancel tickets
+Enter choice: b
+Enter member name (First Last): Mark Smith
+Enter ticket name: The Ukulele Orchestra of Great Britain
+Enter quantity to buy: 3
+✅ Mark Smith bought 3 ticket(s) for The Ukulele Orchestra of Great Britain
+
+--- MENU ---
+f - Finish
+t - Display all tickets
+m - Display all members
+b - Buy tickets
+c - Cancel tickets
+Enter choice: t
+
+--- Ticket Information ---
+Fascinating Aida                    | Available: 0   | Price: £15.50
+Professor Elemental                 | Available: 10  | Price: £8.99
+Spooky Men                          | Available: 0   | Price: £10.99
+The Ukulele Orchestra of Great Britain | Available: 1   | Price: £25.30
+Weird Al                            | Available: 4   | Price: £28.99
+
+--- MENU ---
+f - Finish
+t - Display all tickets
+m - Display all members
+b - Buy tickets
+c - Cancel tickets
+Enter choice: m
+
+--- Member Information ---
+Member: Mark Jones
+  Spooky Men                          | Qty: 1   | Subtotal: £10.99
+  Total spent: £10.99
+
+Member: Mark Smith
+  The Ukulele Orchestra of Great Britain | Qty: 3   | Subtotal: £75.90
+  Total spent: £75.90
+
+Member: Michael Jones
+  Fascinating Aida                    | Qty: 5   | Subtotal: £77.50
+  Total spent: £77.50
+
+Member: Ted Smith
+  Spooky Men                          | Qty: 1   | Subtotal: £10.99
+  Professor Elemental                 | Qty: 1   | Subtotal: £8.99
+  The Ukulele Orchestra of Great Britain | Qty: 3   | Subtotal: £75.90
+  Total spent: £95.88
+
+
+--- MENU ---
+f - Finish
+t - Display all tickets
+m - Display all members
+b - Buy tickets
+c - Cancel tickets
+Enter choice: f
+Exiting program...
+
+Process finished with exit code 0

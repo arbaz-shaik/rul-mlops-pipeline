@@ -1,0 +1,14 @@
+???finding the highest
+so we use header to start in csv file
+header = next(csvreader) this will set header at first row
+to get the max result we set our variable to the lowest we use this variable to compare
+we use float(-inf) {inf represent infinity}
+and we also define a row as max row
+we set it to none
+now we can start a loop
+for a in csvfile:
+    sales  = float(a[4])
+    if sales >= maxsales
+    max sales = a[4]
+    max_row = row
+

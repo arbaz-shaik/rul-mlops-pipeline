@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<head>
+    <title> Storage Api</title>
+</head>
+<body>
+    
+    <input type="text" id="uname" placeholder="enter user name">
+    <br><br>
+    <input type="password" id="upwd" placeholder="enter name">
+    <br> <br>
+    <button onclick="save()">save</button>
+    <button onclick="read()">read</button>
+    <p id="res"></p>
+    <button onclick="remove()">delete</button>
+
+    <script>
+        let save=()=>{
+         
+            let str= JSON.stringify({"uname":document.getElementById("uname").value,
+                "upwd":document.getElementById("upwd").value
+            });
+            localStorage.setItem("login_details", str)
+        }
+
+       
+            let read =()=>{
+                let obj = JSON.parse(localStorage.getItem("login_details"));
+                let{uname,upwd} = obj;
+                document.getElementById("res").innerHTML=uname+"  "+upwd;
+            }
+
+
+        let remove=()=>{
+            localStorage.removeItem("login_details");
+            document.getElementById("res").innerHTML="";
+
+        }
+
+
+
+    </script>

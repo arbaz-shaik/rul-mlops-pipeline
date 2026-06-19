@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>event bubbling</title>
+    </head>
+    <body>
+        <div id="parent">
+            parent
+            <div id="child">
+                child
+                <div id="subchild">
+                    sunchild
+                </div>
+            </div>
+
+        </div>
+        <script>
+
+            // let parent = document.getElementById("parent");
+            // let child = document.getElementById("child");
+            // let subchild = document.getElementById("subchild");
+
+            
+            let parent = document.querySelector("#parent");
+            let child = document.querySelector("#child");
+            let subchild = document.querySelector("#subchild");
+
+
+            parent.addEventListener("click", ()=>{
+                console.log("parent")
+            }, true)
+
+            child.addEventListener("click", (event)=>{
+                event.stopPropagation();
+                console.log("child")
+            }, true)
+
+            subchild.addEventListener("click", ()=>{
+                console.log("subchild")
+            }, true)
+
+            alert("heyheyeyyyy");
+            let res = confirm("letss go on a date!!!");
+
+            document.write(res);
+
+            let data =prompt("please enter number");
+            document.write(data*data);
+
+            
+        
+
+
+
+
+
+        </script>
+    </body>
+</html>

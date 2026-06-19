@@ -1,0 +1,198 @@
+body{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+
+}
+
+header{
+    position: sticky;
+    height: 10vh;
+    width: 100%;
+    background-color: #3498db;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    position: sticky;
+
+   
+}
+ul{ 
+
+    list-style: none;
+    display: flex;  
+    margin-right: 50px;
+   
+}
+
+.logo {
+    font-size: 24px;
+    color: white;
+}
+
+ul li{
+    margin: 0 10px;
+}
+
+ul li a{
+     text-decoration: none;
+     color: white;
+     font-size: 18px;
+}
+
+ul li a:hover{
+
+    text-decoration: underline;
+    
+}
+.bi img{
+
+    width: 100%;
+    
+}
+
+.hero{
+    display: flex;
+    margin: 20px;
+   
+}
+
+.hero .product-name{
+    padding: 20px;
+    margin: 10px;
+    color:#3498db;
+    height: 30vh;
+    align-items: center;
+}
+
+.hero .product-description{
+    padding: 20px;
+    margin: 10px;
+    text-justify: distribute;
+}
+
+
+
+.pricing{
+
+    width: 100%;
+    height: vh;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    gap: 5px;
+    background-color: #ecf0f1;
+    display: grid;
+    border-radius: 50px;
+}
+
+.testimonials{
+    padding: 20px;
+
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 100px;
+    background-color: #ecf0f1;
+    grid-template-columns: 25% 25% 25% 25%;
+    gap: 5px;
+    border-radius: 50px;
+   
+}
+
+.testimonials .testimonial-item{
+    background-color: #ecf0f1;
+    border-radius: 40px;
+
+    padding: 20px;
+}
+
+.pricing h1{
+
+    color: #3498db;
+}
+
+.pricing button{
+    color: #ecf0f1;
+    width: 100px;
+    background-color: #3498db;
+}
+
+.pricing button:hover{
+
+    background-color: #2c3e50;
+    border-radius: 20px;
+}
+
+.Contact {
+
+    margin-top: 100px;
+    margin-bottom: 70px;
+}
+
+
+.Contact form{
+
+    max-width: 300px;
+    margin-top: 100px;
+     background-color: #ecf0f1;
+            margin: 20px;
+            padding: 1em;
+            margin-left: 45%;
+            border-radius: 30px;
+
+
+}
+
+ .Contact label {
+    margin-bottom: 1px;
+    color: black;
+    display: block;
+}
+.Contact select {
+    border: 1px solid grey;
+    padding: 1px;
+    font-size: 1px;
+    width: 100%;
+    box-sizing: border-box;
+}
+.Contact button {
+    color: #ecf0f1;
+    width: 100px;
+    background-color: #3498db;
+    margin: 10px;
+    display: block;
+   
+}
+button:hover {
+    background-color: gray;
+}
+
+
+footer{
+    height: 10vh;
+    background-color: #3498db;
+    align-items: center;
+}
+
+footer p{
+    margin-left: 48%;
+    align-items: center;
+    padding-top: 2em ;
+    margin-bottom: 50px;
+}
+
+.Contact h1{
+
+    color: #3498db;
+    margin-left: 40%;
+    
+}

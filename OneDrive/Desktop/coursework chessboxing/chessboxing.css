@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital@0;1&family=Kanit:wght@700&display=swap');
+
+/* Design tokens */
+:root{
+    --ratio: 1.4142356;
+    --s0: 1rem; /* base */
+    --s1: calc(var(--s0) * var(--ratio));
+    --s2: calc(var(--s1) * var(--ratio));
+    --s3: calc(var(--s2) * var(--ratio));
+    --s4: calc(var(--s3) * var(--ratio));
+    --page-margin: 2.5rem;
+    --gutter: 1rem;
+    --frame-color: #d7d7d7;
+    --muted: #6b6b6b;
+    --accent: #b22222; /* dark red accent */
+    --bg: #faf8f6;
+}
+
+@media (max-width:600px){
+    :root{ --page-margin: 1rem; }
+}
+
+/* Reset & base */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+    margin:0;
+    font-family: 'Crimson Text', Georgia, serif;
+    font-size: 14pt; /* course brief: core typeface 14pt Crimson Text */
+    color:#222;
+    line-height:1.5;
+    background-color:var(--bg);
+    -webkit-font-smoothing:antialiased;
+}
+
+/* Page container */
+.container{
+    max-width: 60ch; /* approx 80-90 characters; use ch for character-width control */
+    margin: 0 auto;
+    padding: var(--page-margin);
+}
+
+/* Header */
+header{
+    background-color:#fff;
+    border-bottom:1px solid var(--frame-color);
+    /* Optional header background image: replace path with the real file if available.
+       Use background-size: contain to ensure it's fully visible at all widths. */
+    background-image: url('assets/header_bg.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+header .container{display:flex;flex-wrap:wrap;align-items:center;gap:1rem}
+header h1{
+    margin:0;
+    font-family: 'Kanit', sans-serif;
+    font-weight:700;
+    font-size:calc(var(--s3) + 0.5rem);
+    color:var(--accent);
+}
+.tagline{margin:0;color:var(--muted);font-size:0.95rem}
+
+/* Navigation */
+.main-nav{list-style:none;margin:0;padding:0;display:flex;gap:1rem}
+.main-nav a{display:inline-block;padding:0.35rem 0.6rem;color:inherit;text-decoration:none;border-radius:4px}
+.main-nav a:hover,.main-nav a:focus{
+    /* Spec requires background #fff6 and yellow text on hover */
+    background: #fff6;
+    color: yellow;
+}
+/* Ensure the nav is aligned to the right edge of the main text container */
+nav{margin-left:auto}
+
+/* Main article card */
+main article{
+    background:#fff;
+    padding:calc(var(--page-margin) - 0.5rem);
+    margin-top:var(--page-margin);
+    border-radius:6px;
+    box-shadow:0 6px 18px rgba(30,30,30,0.06);
+}
+
+/* Figures and images */
+figure{margin:0 0 1rem 0}
+figure img{max-width:100%;height:auto;display:block}
+figure figcaption{font-size:0.9rem;color:var(--muted);margin-top:0.35rem}
+
+/* Float lead image on larger screens */
+section#intro figure{max-width:45%;float:left;margin-right:1.25rem}
+/* Suppress float when display is small (<=600px) so wrapped text doesn't get too narrow */
+@media (max-width:600px){
+    section#intro figure{float:none;max-width:100%;margin-bottom:1rem}
+}
+
+/* Typography */
+h2{font-family:'Kanit',sans-serif;font-size:calc(var(--s2) + 0.2rem);margin-top:0}
+p,ul,pre,blockquote{font-size:var(--s0);margin-top:0.8rem}
+pre.timeline{background:#f4f4f4;padding:0.8rem;border-radius:4px;overflow:auto}
+blockquote{border-left:4px solid var(--frame-color);padding-left:1rem;color:var(--muted)}
+
+/* Video responsive wrapper */
+.video-wrap{position:relative;width:100%;padding-top:56.25%;margin:0.5rem 0 1rem}
+.video-wrap iframe{position:absolute;left:0;top:0;width:100%;height:100%;border:0}
+
+/* Rules list */
+ul{padding-left:1.25rem}
+
+/* Footer inside article */
+footer{font-size:0.9rem;color:var(--muted);margin-top:1.5rem}
+
+/* Small screen adjustments */
+@media (max-width:600px){
+    .main-nav{flex-direction:column;width:100%}
+    header .container{flex-direction:column;align-items:flex-start}
+    .container{padding:var(--page-margin) 0.75rem}
+    main article{padding:1rem}
+}
+
+/* Accessibility: focus outlines */
+a:focus{outline:3px solid rgba(178,34,34,0.2);outline-offset:3px}
+
+/* Utility clearfix for floated figures */
+main::after{content:"";display:table;clear:both}
+
+

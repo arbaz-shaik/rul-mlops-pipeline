@@ -1,0 +1,134 @@
+body{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+   
+}
+
+header{
+    width: 100%; 
+    display: flex;
+    height: 10vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: white; 
+    z-index: 1000; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+header img{
+
+
+    height: 6vh;
+     padding: 1em;
+    width: 100px;
+    align-items: center;
+}
+
+
+nav ul{
+    height: 10vh;
+    box-sizing: border-box;
+    display: flex;
+    list-style: none;
+     margin: 10px;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav li{
+     margin: 10px;
+     
+}
+
+.searchbar {
+    margin-top: 10px;
+    margin-left: 5em;
+    display: flex;
+    height: 10vh;
+    align-items: center;
+   
+    
+}
+
+.searchbar input{
+
+    width: 400px;
+    border: none;
+    background-color: aliceblue;
+    height: 4vh;
+    border-radius: 15px;
+    
+}
+
+.icons ul{
+   
+    height: 10vh;
+    box-sizing: border-box;
+    display: flex;
+    list-style: none;
+   margin-left: 5em;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.icons li{
+     margin: 10px;
+     width: 100%;
+}
+
+.banner1{
+    margin-top: 10vh;
+}
+
+.banner1 img{
+    width: 100%;
+}
+
+.banner2 img{
+    width: 100%;
+   
+}
+
+.offers1{
+    display:flex;
+    width: 100%;
+    padding: 10px;
+}
+
+.offers1 img{
+    width: 100%;
+     border-radius: 20px;
+
+}
+.offers1 img:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+
+.banner3, .banner4,  img{
+    width: 100%;
+}
+
+
+.offers3{
+    display:flex;
+    width: 100%;
+    padding: 10px;
+    justify-content: space-between;
+}
+
+.offers3 img{
+    width: 100%;
+     border-radius: 20px;
+     
+
+}
+.offers3 img:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}

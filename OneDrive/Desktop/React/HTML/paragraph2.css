@@ -1,0 +1,25 @@
+table{
+    width: 20%;
+    text-size-adjust: 40px;
+    margin: 1px;
+    border: 1px solid gray;
+    border-collapse: collapse;
+    display: inline-block;
+    
+   
+}
+
+th{
+    border: solid grey;
+    padding: 10px;
+    background-color:rgba(17, 0, 255, 0.342);
+    ;
+}
+
+td{
+    border: 1px;
+    padding: 10px;
+    background: linear-gradient(55deg, red
+    , blue);
+    
+}

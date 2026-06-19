@@ -1,0 +1,134 @@
+/* Menu Page Specific Styles */
+
+/* Main styles */
+main {
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.menu-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 20px;
+}
+
+.menu-item {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.menu-item h2 {
+    margin-bottom: 10px;
+}
+
+.menu-item p {
+    margin-bottom: 5px;
+}
+
+.menu-item .price {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Navigation Styles */
+.navigation {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.navigation ul {
+    list-style-type: none;
+}
+
+.navigation ul li {
+    display: inline-block;
+    margin-right: 20px;
+    position: relative; /* Added for dropdown effect */
+}
+
+.navigation ul li a {
+    color: #0d0404;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+.navigation ul li a:hover {
+    background-color: #555;
+}
+
+/* Dropdown Styles */
+.navigation ul ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #333;
+    padding: 10px 0;
+    border-radius: 0 0 5px 5px;
+}
+
+.navigation ul li:hover > ul {
+    display: block;
+}
+
+.navigation ul ul li {
+    display: block;
+    margin: 0;
+}
+
+.navigation ul ul li a {
+    padding: 8px 15px;
+    color: #000000;
+}
+
+.navigation ul ul li a:hover {
+    background-color: #444;
+}
+
+
+
+
+
+.navigation ul li a:hover {
+    text-decoration: underline;
+}
+
+header {
+    display: flex;
+    justify-content: space-between; /* Distribute items evenly */
+    align-items: center; /* Center items vertically */
+    height: 60px; /* Set a fixed height for the header */
+    padding: 0 20px; /* Add padding to the sides */
+    background-color: #333;
+    color: #fff;
+}
+
+.logo {
+    width: 120px; /* Set a fixed width for the logo */
+}
+
+.navigation ul {
+    list-style-type: none;
+    display: flex;
+}
+
+.navigation ul li {
+    margin-right: 15px; /* Increase space between menu items */
+}
+
+.navigation ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px; /* Increase font size for better readability */
+}
+
+.navigation ul li a:hover {
+    text-decoration: underline;
+}

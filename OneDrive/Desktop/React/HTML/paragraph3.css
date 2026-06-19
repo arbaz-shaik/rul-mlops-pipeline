@@ -1,0 +1,21 @@
+#id1{
+     background: linear-gradient(45deg, red, blue
+     );
+     
+}
+
+#id2:hover{
+    background: linear-gradient(45deg, green, yellow
+ );}
+#id3{
+    background-color: aqua;
+}
+p{
+    border: 1px solid gray;
+    width: 20%;
+    padding: 10px;
+    color: rgb(0, 0, 0);
+    border-radius: 20px;
+    text-align: justify;
+    display: inline-block;
+}

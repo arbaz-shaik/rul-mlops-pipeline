@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+   
+    <title>Grid Layout</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            display: grid;
+            grid-template-rows: 60px 1fr 50px;
+            grid-template-columns: 250px 1fr;
+            grid-template-areas:
+                "header header"
+                "sidebar main"
+                "footer footer";
+            height: 100vh;
+        }
+
+        .header {
+            grid-area: header;
+            background: #333;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .sidebar {
+            grid-area: sidebar;
+            background: #ddd;
+            padding: 20px;
+        }
+
+        .sidebar h3 {
+            margin: 0;
+            padding-bottom: 10px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 10px 0;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+        }
+
+        .main {
+            grid-area: main;
+            background: #fff;
+            padding: 20px;
+        }
+
+        .footer {
+            grid-area: footer;
+            background: #333;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1rem;
+        }
+
+        
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                grid-template-rows: 60px 1fr auto 50px;
+                grid-template-areas:
+                    "header"
+                    "main"
+                    "sidebar"
+                    "footer";
+            }
+            
+            .sidebar {
+                text-align: center;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">Header</div>
+
+    <div class="sidebar">
+        <h3>Sidebar</h3>
+        <p>The Menu or quick access content.</p>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <h3>Main Content</h3>
+        <p>The core website content should be displayed here.</p>
+    </div>
+
+    <div class="footer">Footer</div>
+</div>
+
+</body>
+</html>

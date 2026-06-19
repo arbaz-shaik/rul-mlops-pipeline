@@ -1,0 +1,19 @@
+dl{
+    border: 1px solid red;
+    padding: 20px;
+    width: 30%;
+    background-color: aqua;
+    margin: 100px auto;
+
+}
+
+dt{
+    background-color: rgb(120, 100, 206);
+    color: rgb(15, 10, 3);
+    padding: 5px;
+    border: 1px;
+    border-radius: 10px;
+}
+dd{
+    border-bottom: 1px solid black;
+}

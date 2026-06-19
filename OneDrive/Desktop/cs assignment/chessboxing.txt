@@ -1,0 +1,81 @@
+Chessboxing
+
+-
+
+[FIGURE resources/chessboxing_ring.jpg HERE]
+"Fighting is done in the ring and wars are waged on the board" -- Word Chess Boxing Organization
+
+Chessboxing is a hybrid that combines two traditional pastimes: chess and boxing. The competitors compete in alternating rounds of chess and boxing.
+
+The basic idea in Chessboxing is to combine the number one thinking sport with the number one fighting sport into a hybrid that demands the most of its competitors - both mentally and physically. One of the goals of this new sport is the old idea of a healthy mind in a healthy body. During a Chessboxing fight the control of aggression plays a big role.
+
+
+History
+
+Chessboxing was invented by Dutch performance artist Iepe Rubingh. Rubingh's idea to create a new sport fusing the two disciplines, chess and boxing, originates from the 1992 comic "Froid Équateur" (written by French comic book artist Enki Bilal) that portrays a chessboxing world championship.
+
+[EMBEDDED VIDEO https://www.youtube.com/embed/8ZGHrzE8bqc HERE]
+What is chessboxing and how did it become a sport? (ESPN The Ocho)
+
+The first chessboxing competition took place in Berlin in 2003. That same year, the first world championship fight was held in Amsterdam in cooperation with the Dutch Boxing Association as well as the Dutch Chess Federation and under the auspices of the World Chess Boxing Organization (WCBO) that was founded in Berlin shortly before. Dutch middleweight fighters Iepe Rubingh and Jean Louis Veenstra faced each other in the ring. After his opponent exceeded the chess time limit, Rubingh won the fight in the 11th round going down in the history books as the first-ever World Chess Boxing Champion. The same goes for the Chess Boxing Club Berlin, created in the following year (2004), that is the first of its kind making Berlin the birthplace of chessboxing.
+
+In terms of its development into a mass sport, there was much success in 2013 and early 2014 for the chessboxing world. There were more competitors in the second and third Indian Championships in summer 2013 and early 2014 than in any chessboxing events ever before, with more than 245 fighters varying in both age and weight class, taking place in Salem and Jodhpur, respectively. Furthermore, the chessboxing community in London has continued to grow constantly since 2011 and by now stages chessboxing events for 800 or more spectators on a regular basis 4–5 times a year at the Scala, King's Cross.
+
+Timeline of chessboxing clubs around the world.
+
+    Year    Location
+    2004    Berlin (Germany)
+    2008    London (UK), Krasnoyarsk (Russia)
+    2009    Los Angeles (USA)
+    2010    New York (USA), Munich (Germany)
+    2011    India, China
+    2012    Iran, Italy
+    2015    Finland
+    2018    France
+    2019    Nidge (Turkey)
+
+[FIGURE resources/chessboxing_map.png HERE]
+
+The sport of Chessboxing is actively developing and growing as popular and favorite sport for many people which try to find new realization and challenges. Actual number of local federations are officially registered in countries such as: China, Costa Rica, Czech Republic, Finland, France, Germany, Great Britain, India, Iran, Italy, Madagascar, Mexico, Netherlands, Philippines, Russia, South Africa, Spain, Turkey, Ukraine, USA, and others.
+
+Chessboxing is particularly popular in India, which is currently home to the biggest chessboxing foundation in the world.  The sport has also become popular among Indian young and poor women where the sport has been seen as an alternative to traditional roles.
+
+In 2016, still as FIDE president, Kirsan Ilyumzhinov publicly announced to "Top Sport" his desire to include Chessboxing in the Olympic games.
+
+
+Rules
+
+In a chessboxing match six rounds of chess alternate with five rounds of boxing. Each round lasts three minutes with one-minute breaks in between to switch from the chess table to the boxing ring. A chessboxing match can end by any of the following:
+
+    - Victory by knockout or technical knockout in boxing
+    - Victory by checkmate in chess
+    - Loss due to exceeding the chess game's time control
+    - Victory due to disqualification of his or her opponent by the referee e.g. due to inactivity
+    - Loss by resignation (chess or boxing rounds)
+
+In the case that neither of the chessboxers win in regulation time and the chess game ends in a draw, the fighter who is ahead on boxing points wins the overall bout. In case the scoreboard is also tied, the fighter that used the black chess pieces will be named the winner (due to the first-move advantage in chess). This has not yet occurred in practice.
+
+
+Particular requirements & training
+
+A chessboxer must have strong skills in both chess and boxing in order to be permitted to compete in a professional chessboxing fight. The current minimum requirements to fight in a Chess Boxing Global event include an Elo rating of 1600 and a record of at least 50 amateur bouts fought in boxing or another similar martial art. One deciding factor in chessboxing is that the fighters have to mainly train in speed chess; the skills required by speed chess are different from those for chess using classical time controls. However, chessboxing is not only the ability to master both sports but above all, being able to withstand the constant switch from a full contact sport to a thinking sport, round after round. After three minutes of boxing, pulses are racing, yet the opponents have to face each other at the chessboard barely having taken a break, and have to then perform calmly and think tactically. This switch becomes increasingly hard for the athletes as the fight goes on and they become tired.
+
+In order to train these skills, a specialised chessboxing training is used, in which physical interval training forms are combined with blitz or speed chess games. Thereby the fighters adapt the rhythm of a chessboxing bout. They will use exercises like "track chess" and "stair chess" in which training partners will play an 18-minute game of speed chess over six rounds with intensive running exercises in between, such as 400-meter sprints or stair sprints. Other common methods of training combine speed chess games with strength exercises such as push-ups. The classic chessboxing training is box sparring combined with a game of speed chess.
+
+In parallel with the development of Chessboxing as a sport, it has found an increasing place in a number of scientific works by leading scientists who study the potential of application of the concept in various fields.
+
+    - The concept of Chessboxing sport is of great interest to science seeking to optimize and increase the physical  and psychological characteristics of athletes through the application of new methods and approaches to increase human strength, biomechanical and intellectual abilities, and other.
+
+    - The concept of the sport of Chessboxing occupies a leading place in the research of scientists looking for new integrated methods and approaches applicable in the educational process in order to improve the general condition of adolescents, young people and disadvantaged people.
+
+    - In general, the main conclusions shows the positive impact of the diversity of the sport of Chessboxing, characterized by a certain dynamics in a diverse environment.
+
+
+Man versus machine competition
+
+In 2019, WCBO announced plans to organize man-versus-machine competitions, where the best chessboxer will compete against the best robot in a chessboxing fight to decide "who rules the planet":
+
+"Since the computer beat Kasparov in chess, we have been on the defensive when it comes to intelligence. Even more so since artificial intelligence is on the rise. We are all in awe of the videos showing us robots on 2 feet doing backflips. On the other hand, they still look quite stiff compared to Muhammad Ali or Mike Tyson. Will this be the last ground where we can still beat them? " -- Iepe Rubingh
+
+
+Text and images adapted from https://en.wikipedia.org/wiki/Chess_boxing and https://chessboxing.io/.

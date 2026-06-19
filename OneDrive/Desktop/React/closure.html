@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Closure
+        </title>
+    </head>
+    <body>
+        
+        <script>
+            let func_1=()=>{
+
+                let x= 100;
+                let y =23;
+                return()=>{
+
+                    document.write(x);
+                    document.write(y);
+
+                }
+
+            }
+            console.dir(func_1());
+        </script>
+    </body>
+</html>

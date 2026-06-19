@@ -1,0 +1,20 @@
+ol,ul{
+    border: 1px solid grey;
+    width: 20%; 
+    background-color: antiquewhite;
+    display:inline-block;
+    margin: 10px;
+    border-radius: 20px;
+}
+li{
+    background-color:bisque;
+    color:blue;
+    padding: 20px;
+    border: 1px solid red;
+    border-radius: 20px;
+    
+}
+
+li:hover{
+    background-color: rgb(240, 1, 1) ;
+}

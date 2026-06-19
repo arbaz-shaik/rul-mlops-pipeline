@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>jquery</title>
+    </head>
+
+    <body>
+     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js">
+
+            $.ajax({
+    method:"GET",
+    url: "https://www.w3schools.com/angular/customers.php",
+    success: (posRes)=>{
+
+        let obj = JSON.parse(posRes);
+    let {records}=(obj);
+
+        document.write(`<div class="parent">`);
+            records.forEach((element,index) =>{
+                let Name, city, County = element;
+            document.write(`<div class="child"`);
+            document.write(`<h1>${Name}</h1>`);                 
+            document.write(`<h1>${City}</h2>`) ;    
+            document.write(`<h1>${County}</h2>`)  }   
+
+        )
+
+        console.log(typeof posRes);
+
+    },
+    error: (errRes)=>{
+        console.log(errRes);
+    }
+})
+
+        </script>
+
+
+
+        <script>
+            let obj= {
+                "key1": ()=>{
+                    document.write("hello")
+                }
+    
+            };
+
+            let {key1 }=obj;
+            key1();
+        </script>
+
+
+<script>
+    let obj1 ={
+        "key1": function(){
+            return "Excelr"
+        }
+        
+    }; 
+
+    let{ key1}= obj1;
+    let str = key1();
+    document.write(str);
+</script> -->
+
+
+<script>
+    let obj ={
+        100 : "hello"
+    };
+    document.write(obj[100])
+</script>
+
+    </body>
+</html>

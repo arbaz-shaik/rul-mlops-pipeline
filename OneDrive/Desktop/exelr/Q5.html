@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+   
+    <title>Flexbox Properties</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ff758c, #ff7eb3);
+            color: white;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .box {
+            display: flex;
+            width: 250px;
+            height: 150px;
+            background: linear-gradient(to bottom right, orange, yellow);
+            border-radius: 10px;
+            border: 2px solid white;
+            padding: 10px;
+        }
+
+        .box div {
+            width: 50px;
+            height: 50px;
+            margin: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: blue;
+            color: white;
+            font-size: 14px;
+            border-radius: 5px;
+        }
+
+        .row { flex-direction: row; }
+        .row-reverse { flex-direction: row-reverse; }
+        .column { flex-direction: column; }
+        .column-reverse { flex-direction: column-reverse; }
+
+        .center { justify-content: center; align-items: center; }
+        .space-between { justify-content: space-between; }
+        .space-around { justify-content: space-around; }
+        .space-evenly { justify-content: space-evenly; }
+        .start { justify-content: flex-start; }
+        .end { justify-content: flex-end; }
+
+    </style>
+</head>
+<body>
+
+    <h1>Flexbox Properties Demo</h1>
+    <div class="container">
+        <div class="box row">
+            <div>Box1</div> <div>Box2</div> <div>Box3</div>
+        </div>
+        <div class="box row-reverse">
+            <div>Box1</div> <div>Box2</div> <div>Box3</div>
+        </div>
+        <div class="box column">
+            <div>Box1</div> <div>Box2</div> <div>Box3</div>
+        </div>
+        <div class="box column-reverse">
+            <div>Box1</div> <div>Box2</div> <div>Box3</div>
+        </div>
+        <div class="box center">
+            <div>Box1</div> <div>Box2</div> <div>Box3</div>
+        </div>
+        <div class="box space-between">
+            <div>Box1</div> <div>Box2</div> <div>Box3</div>
+        </div>
+        <div class="box space-around">
+            <div>Box1</div> <div>Box2</div> <div>Box3</div>
+        </div>
+        <div class="box space-evenly">
+            <div>Box1</div> <div>Box2</div> <div>Box3</div>
+        </div>
+        <div class="box start">
+            <div>Box1</div> <div>Box2</div> <div>Box3</div>
+        </div>
+        <div class="box end">
+            <div>Box1</div> <div>Box2</div> <div>Box3</div>
+        </div>
+    </div>
+
+</body>
+</html>

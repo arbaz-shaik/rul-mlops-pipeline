@@ -1,0 +1,58 @@
+package com.excelr;
+
+public class MethodsExamples {
+
+
+	public static void main(String[] args) {
+		
+		MethodsExamples methodsExamples = new MethodsExamples();
+	
+		methodsExamples.m1();
+		methodsExamples.add();
+		methodsExamples.sub();
+		methodsExamples.mul();
+		methodsExamples.div();
+
+	}
+	
+	public void m1() {
+		
+	System.out.println("welcome to method 2");
+	}
+	
+	public void add() {
+		
+		int x =4;
+		int y = 9;
+		int z = x+y;
+		System.out.println("additonn.."+z);
+		
+	}
+	public void sub() {
+		
+		int x =4;
+		int y = 9;
+		int z = x-y;
+		System.out.println("subtraction.."+z);
+		
+		
+	}
+	public void mul() {
+		
+		int x =4;
+		int y = 9;
+		int z = x+y;
+		System.out.println("multiplication.."+z);
+		
+	}
+	public void div() {
+		
+		int x =4;
+		int y = 9;
+		int z = x+y;
+		System.out.println("Division"+z);
+		
+	}
+
+}
+;

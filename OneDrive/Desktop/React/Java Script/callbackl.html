@@ -1,0 +1,109 @@
+<html>
+    <head>
+        <title>
+            callback
+        </title>
+    </head>
+    <body>
+        
+        <script>
+       /*     let fone = ( param1, param2, param3)=>
+        {
+            param1();
+            param2();
+            param3();
+        }
+
+        fone(()=>{
+            document.write("He He ", "<br>");
+        }
+        ,()=>{
+            document.write("Ha Ha " , "<br>");
+        }
+        ,()=>{
+            document.write("Ho Ho " , "<br>");
+        }
+    
+    );
+    let ftwo = (para4, para5, para6, para7)=>{
+
+      let  x=para4();
+     
+      let  y=para5();
+    
+      let  z=para4();
+     
+      let  a=para4();
+    
+      let b=a+x+y+z;
+      document.write(b);
+
+    }
+
+    ftwo(()=>{
+        return 100;
+    },
+    ()=>{
+        return 200;
+    },
+    ()=>{
+        return 300;
+    },
+    ()=>{
+        return 400;
+    }
+)*/
+    let add = (num, callback)=>{
+
+        callback(num+10, false);
+
+
+    };
+    let sub = (num, callback)=>{
+
+        callback(num-3,false);
+
+    }
+
+
+    let div =( num, callback)=>{
+        callback(num/2, false);
+        
+
+
+
+    }
+    
+    
+    
+    add(5,(addRes,flag) =>{
+
+           if (!flag ){
+            sub(addRes,(subres,flag)=>
+        
+        {
+            div(subres,(divres, flag)=>{
+
+              if (!flag) {
+                document.write(divres)
+              }
+
+            }
+                
+        )
+
+           
+        })
+    }
+
+    else{
+        document.write("addRes");
+    }
+
+    })
+
+
+    
+        </script>
+    </body>
+</html>

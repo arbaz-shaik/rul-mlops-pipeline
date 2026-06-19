@@ -1,0 +1,52 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+.parent {
+  display: grid;
+  height: 100vh;
+  place-content: center;
+}
+
+#page {
+  position: absolute;
+  left: 50%;
+  top: 60%;
+  transform: translate(-50%);
+}
+
+@media (max-width: 500px) {
+  body {
+    background-color: red;
+  }
+  h2 {
+    color: azure;
+  }
+  p {
+    color: #acacac;
+  }
+}
+@media (max-width: 800px) {
+  body {
+    background-color: green;
+  }
+  h2 {
+    color: azure;
+  }
+  p {
+    color: #000;
+  }
+}
+@media (max-width: 900px) {
+  body {
+    background-color: blue;
+  }
+  h2 {
+    color: azure;
+  }
+  p {
+    color: aquamarine;
+  }
+}/*# sourceMappingURL=mediaqueries.css.map */

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>costructor</title>
+    </head>
+    <body>
+        
+        <script>
+           /* function class1(){
+                this.x="Frontend";
+                this.v="backend";
+
+            }
+            function  class2(){
+
+                this.v="backend";
+
+            }
+
+            function class3(){
+
+                this.y="Database";
+            }
+
+            function class4(){
+                this.z="mangodb";
+            }
+
+
+
+            let obj1 = new class1();
+            let res =obj1.x;
+
+            document.write(res);
+
+            function class1(){
+
+            }
+
+            class1.prototype.x ="hello";
+
+            let obj1 = new class1();
+
+            let res = obj1.x;
+            document.write(res);
+
+            function class1(){
+                
+            }
+
+            class1.prototype.frontend = 2;
+            class1.prototype.backend = 3;
+            class1.prototype.database = 4;
+
+            let add= new class1();
+
+            x = add.frontend;
+            y= add.backend;
+            z=add.database;
+
+            console.log(x+y+z);
+
+            function class1(){
+
+            }
+
+            class1.prototype.x=100;
+
+            function class2 (){
+
+            }
+
+            class2.prototype = Object.create(class1.prototype);
+            class2.prototype.y =200;
+
+            let obj1 = new class2() ;
+            let res1 = obj1.x;
+            let res2 = obj1.y;
+            document.write(res1, res2) ;
+
+            function class1(){
+
+    
+
+
+            }
+
+            class1.prototype.x =100;
+            class1.prototype.y =100;
+
+            function class2(){}
+
+            class2.prototype = Object.create(class1.prototype);
+            class2.prototype.p= 200;
+            class2.prototype.q= 200;
+
+            let obj = new class2();
+            let res1 = obj.x;
+            let res2 = obj.y;
+            let res3 = obj.p;
+            let res4 = obj.q;
+            document.write(res1,`<br>`, res2,`<br>`, res3,`<br>`,res4,`<br>`);
+            function class1(){
+                this.func_one= function(){
+                    document.write(`<br>`,`wavyyyyyyyyy`)
+                }
+                this.func_two= function(){
+                     document.write(`<br>`,`its`)
+                }
+                this.func_three= function(){
+                     document.write(`<br>`,`wavyyyy`)
+                }
+            }
+
+            
+
+                let obj = new class1();
+                obj.func_two();
+                obj.func_one();
+                obj.func_three();
+
+                ((num1, num2)=>{
+                    document.write(num1 + num2);
+                })(10,20)
+
+                let func_one = (param)=>{
+
+                    return `welcome to ${param}`
+                    
+                }
+
+              let res=  func_one(
+                    (()=>{
+                        return `ExcelR`
+                    })()
+                )
+
+                document.write(res);
+
+                function *fun() {
+
+                    yield 100;
+                    yield 200;
+                    yield 300;
+
+                    
+                }
+                let itterator = fun();
+                console.log(itterator.next());
+                console.log(itterator.next());
+                console.log(itterator.next());
+                fun()
+
+                function *functone() {
+                    yeild `exelr`;
+                     yeild `exelr`;
+                      yeild `exelr`;
+
+                }
+
+                let iterator = functone();
+                console.log(iterator.next());
+                console.log(iterator.next());*/
+
+
+                function *fun_one(){
+
+                    yield `exelr`;
+                     yield *fun_two();
+                      yield `exelr`;
+                     yield 200;
+
+
+
+                }
+
+                
+                
+                
+
+
+
+
+        </script>
+    </body>
+</html>

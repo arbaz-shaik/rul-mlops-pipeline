@@ -1,0 +1,193 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+header .logo img {
+    height: 40px;
+}
+
+header nav {
+    display: flex;
+    align-items: center;
+}
+
+header nav ul {
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+header nav ul li {
+    margin-right: 20px;
+}
+
+header nav ul li a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+header nav ul li a:hover {
+    text-decoration: underline;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+}
+
+.search-bar input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.search-bar button {
+    padding: 5px 10px;
+    border: none;
+    background-color: #ff5733;
+    color: #fff;
+    border-radius: 3px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.search-bar button:hover {
+    background-color: #ff2e00;
+}
+
+main {
+    padding: 20px;
+}
+
+.popular-cars, .all-brands, .filter-cars {
+    margin-bottom: 40px;
+}
+
+h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.car-cards, .brands {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.car-card, .brand {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 10px;
+    width: 200px;
+    padding: 20px;
+    height: auto;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.car-card img, .brand img {
+    width: 100%;
+    height: auto;
+    
+}
+
+.car-card h3, .brand h3 {
+    
+    padding: 10px;
+    font-size: 1.2em;
+
+}
+
+.car-card p, .brand p {
+    margin: 5px 10px;
+}
+.brand:hover {
+   background-color: #ccc;
+}
+
+.car-card a, .brand a {
+    margin: 10px;
+    padding: 5px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.car-card a:hover, .brand a:hover {
+    background-color: #0056b3;
+}
+
+.filter-cars .filters {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.filter {
+    padding: 10px 20px;
+    border: none;
+    background-color: #fff;
+    cursor: pointer;
+    font-weight: bold;
+    color: #007bff;
+    border-bottom: 2px solid transparent;
+    margin-right: 10px;
+}
+
+.filter:hover{
+    text-decoration: underline 2px #007bff ;
+    
+
+}
+
+.filter.active {
+    border-bottom: 2px solid #007bff;
+    
+}
+
+.filter-options {
+    display: flex;
+    justify-content: center;
+}
+
+.filter-options button {
+    padding: 10px 20px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.filter-options button:hover{
+    background-color: #007bff;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #f1f1f1;
+    border-top: 1px solid #e0e0e0;
+}
+
+footer p {
+    margin: 0;
+}

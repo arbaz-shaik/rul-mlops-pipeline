@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>funtion</title>
+    </head>
+    <body>
+        
+       <input type="text" id="res" placeholder="enter text">
+
+       <h1 id="res2"></h1>
+        <script>
+           document.getElementById("res").value=`fullstack`;
+
+           document.getElementById("res2").innerHTML=`hey hey its dynamic bro!`;
+
+        </script>
+
+
+     <!---  <script>
+            function func_one(){
+
+             document.write(
+                `welcome to funtion decleration`
+             )
+            }
+            func_one();
+        </script>-->
+        
+
+      <!--  <script>
+            let func_one = function(){
+
+             document.write(
+                `welcome to funtion decleration`
+             )
+             func_one();
+            }
+            
+        </script>-->
+
+        <!--<script>
+            let func_one = ()=>{
+
+             document.write(
+                `welcome to arrow funtion`
+             )
+             func_one();
+       </script> }-->
+
+       <!--<script>
+         let fullstack = function(){
+
+
+            document.write(
+   
+            `welcome to funtion decleration`
+    
+        ) 
+
+        fullstack();
+
+       
+        
+    </script>
+     <script>
+       function func_one (param1){
+
+
+
+        document.write(
+   `welcome to ${param1}`,`<br>`)
+
+   }
+
+       func_one(`javascript`);
+       func_one(`HTMl`);
+       func_one(`CSS`)
+
+       let fun = (para) => {
+    document.write(`hello ${para}<br>`);
+
+    }
+
+     fun('arbaz');
+
+
+     let addition = (num1, num2)=>{
+
+        let res = num1 +  num2;
+
+        document.write(`addition....${res}`,"<br>")
+
+     }
+
+     addition(200,200);
+
+     let sub = (num1,num2) =>{
+        if (num1>num2){
+
+        let res = num1-num2;
+        document.write(`subtraction of number =${res}`,'<br>')}
+        else{
+            let res = num2-num1;
+        document.write(`subtraction of number =${res}`,'<br>')
+
+        }
+     }
+
+     sub(11,299)
+
+
+     let div = (num1,num2) =>{
+       
+            let res = num2/num1;
+        document.write(`divisoin of number =${res}`,'<br>')
+
+        }
+     
+
+     div(11,299)
+
+     
+
+     
+
+     </script>
+    
+     <script>
+        let wish= (name)=>{
+            return `welcome to ${name}`;
+
+        }
+        let res = wish (`javascript`);
+        document.write(res,`<br>`);
+
+        let resl = wish (`reactjs`);
+        document.write(resl,`<br>`);
+     </script>
+
+     <script>
+        let add = (num1, num2, num3, num4 )=>{
+            return num1 + num2 + num3 + num4;
+
+        }
+
+        let res = add(10, 20 ,30, 40);
+        document.write(res,`<br`)
+
+     </script>
+
+     <script>
+        function sol7  (num1,num2){
+        return (num1*num1*num1)+(num2*num2);}
+
+        let sol = sol7(3,4);
+        document.write(sol,`<br>`)
+       
+
+        let sol6 = sol6(num1, num2){
+
+            return (num1*num1*num1)+(num2*num2);}
+
+    
+            
+
+
+
+
+
+        
+
+     </script> 
+
+
+
+     <fieldset>
+      <legend>
+         Login Form
+      </legend>
+
+      <input type="text"id="uname" placeholder="enteruser name">
+      <br><br>
+      <input type="text"id="upaw" placeholder="enteruser name">
+      <br><br>
+      <button onclick="login">Login</button>
+      <br><br>
+      <h1 id="res"> </h1>
+
+
+     </fieldset>
+
+     <script>
+      let login = ()=>{
+
+         let uname= document.getElementById("uname").value;
+         let upaw= document.getElementById("upaw").value;
+
+         if(uname=="arbaz" && upaw=="0000"){
+
+            document.getElementById("res").innerHTML = "wohooo sucess"
+         }
+         else{
+             document.getElementById("res").innerHTML = "ohoh check the details"
+         }
+      }
+     </script>
+
+     <fieldset>
+      <legend>
+         Calculator
+      </legend>
+
+      <input type="number"id="num1" placeholder="enterusername">
+      <br><br>
+      <input type="number"id="num2" placeholder="enterusername">
+      <br><br>
+      <input type="number"id="res5" placeholder="resul there">
+      <br><br>
+      <button onclick="add()">Add</button>
+      <br><br>
+      <button onclick="sub()">sub</button>
+      <br><br>
+       
+   </fieldset>
+
+     <script>
+
+      let add =()=>{
+
+         let  x= parseInt(document.getElementById("num1").value);
+         let  y= parseInt(document.getElementById("num2").value);
+         let z = x+y;
+        
+
+
+      }
+
+      let sub =()=>{
+
+         let  x= parseInt(document.getElementById("num1").value);
+         let  y= parseInt(document.getElementById("num2").value);
+         let z = x-y;
+         document.getElementById("res5").value = z;
+
+
+      }
+   
+     </script>-->
+
+     <fieldset>
+      <label for="pname">Product Name:</label>
+      <input type="text" id="pname" placeholder="Enter product name">
+      <br><br>
+      
+      <label for="cost">Product Amount:</label>
+      <input type="number" id="cost" placeholder="">
+      <br><br>
+      
+      <label for="res5">GST %:</label>
+      <input type="number" id="res5" value="18" readonly>
+      <br><br>
+      
+      <label for="gstamt">GST Amount:</label>
+      <input type="number" id="gstamt" placeholder="" readonly>
+      <br><br>
+      
+      <button onclick="calculateGstAmount()">Calculate GST Amount</button>
+      <button onclick="calculateFinalAmount()">Calculate Final Amount</button>
+      <br><br>
+      
+      <label for="finalD">Final Amount:</label>
+      <input type="number" id="finalD" placeholder="" readonly>
+  </fieldset>
+  
+  <script>
+      function calculateGstAmount() {
+          let cost = parseFloat(document.getElementById("cost").value);
+          let gstPercent = parseFloat(document.getElementById("res5").value);
+          let gstAmount = cost * gstPercent / 100;
+          document.getElementById("gstamt").value = gstAmount.toFixed(2);
+      }
+  
+      function calculateFinalAmount() {
+          let cost = parseFloat(document.getElementById("cost").value);
+          let gstAmount = parseFloat(document.getElementById("gstamt").value);
+          let finalAmount = cost + gstAmount;
+          document.getElementById("finalD").value = finalAmount.toFixed(2);
+      }
+  </script>
+  Key Changes:
+  HTML Structure:
+  
+  Added label elements for better accessibility.
+  Updated input types for numerical values to number to ensure proper input type.
+  Set the GST % input (res5) to readonly since it should not be edited by the user.
+  JavaScript Functions:
+  
+  Defined calculateGstAmount() to calculate and display the GST amount.
+  Defined calculateFinalAmount() to calculate and display the final amount including GST.
+  Used toFixed(2) to format the amounts to two decimal places for better readability.
+  Event Handling:
+  
+  Correctly attached the calculateGstAmount and calculateFinalAmount functions to the onclick events of the buttons.
+  This code will now properly calculate the GST amount and the final amount when the respective buttons are clicked.
+  
+  what were the errors inmy code
+  ChatGPT
+  Here are the main issues in your original code:
+  
+  Incorrect input type for product amount, gst%, and gst amount:
+  
+  You used type="int", which is not a valid HTML input type. It should be type="number".
+  Incorrect function binding for finala:
+  
+  The onclick attribute for the final amount button should be onclick="finala()", but it was missing parentheses.
+  Scope and timing issues in JavaScript:
+  
+  The variables x and g were defined outside the function and immediately evaluated before any user input could be provided. This means x would be NaN (Not a Number) since the value of the input field was not yet set.
+  You need to define these variables inside the function to ensure they are calculated with the current input values when the button is clicked.
+  Improper use of parseInt:
+  
+  It's better to use parseFloat when dealing with monetary values to handle decimal points.
+  Here is a corrected version with explanations for each correction:
+  
+  html
+  Copy code
+  <fieldset>
+      <label for="pname">Product Name:</label>
+      <input type="text" id="pname" placeholder="Enter product name">
+      <br><br>
+      
+      <label for="cost">Product Amount:</label>
+      <input type="number" id="cost" placeholder="">
+      <br><br>
+      
+      <label for="res5">GST %:</label>
+      <input type="number" id="res5" value="18" readonly>
+      <br><br>
+      
+      <label for="gstamt">GST Amount:</label>
+      <input type="number" id="gstamt" placeholder="" readonly>
+      <br><br>
+      
+      <button onclick="calculateGstAmount()">Calculate GST Amount</button>
+      <button onclick="calculateFinalAmount()">Calculate Final Amount</button>
+      <br><br>
+      
+      <label for="finalD">Final Amount:</label>
+      <input type="number" id="finalD" placeholder="" readonly>
+  </fieldset>
+  
+  <script>
+      // Function to calculate GST amount
+      function calculateGstAmount() {
+          // Get the product amount and GST percentage
+          let cost = parseFloat(document.getElementById("cost").value);
+          let gstPercent = parseFloat(document.getElementById("res5").value);
+          
+          // Calculate GST amount
+          let gstAmount = cost * gstPercent / 100;
+          
+          // Set the GST amount in the input field
+          document.getElementById("gstamt").value = gstAmount.toFixed(2);
+      }
+  
+      // Function to calculate final amount
+      function calculateFinalAmount() {
+          // Get the product amount and GST amount
+          let cost = parseFloat(document.getElementById("cost").value);
+          let gstAmount = parseFloat(document.getElementById("gstamt").value);
+          
+          // Calculate final amount including GST
+          let finalAmount = cost + gstAmount;
+          
+          // Set the final amount in the input field
+          document.getElementById("finalD").value = finalAmount.toFixed(2);
+      }
+  </script>
+
+
+     </script>
+     
+
+    </body>
+</html>

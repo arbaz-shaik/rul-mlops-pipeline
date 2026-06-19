@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Forms Validation</title>
+        <link rel="stylesheet" href="forms.css">
+        <script src="forms.js" defer></script>
+    </head>
+    <body>
+        <form name="regForm" onsubmit="return register()">
+            <table>
+                <tr>
+                    <td>First Name</td>
+                    <td>
+                        <input type="text" name="fname" placeholder="Enter first name">
+                    </td>
+                    <td>
+                       <span id="fname_error" style="color:red;"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Last Name</td>
+                    <td>
+                        <input type="text" name="lname" placeholder="Enter last name">
+                    </td>
+                    <td>
+                       <span id="lname_error" style="color:red;"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Email</td>
+                    <td>
+                        <input type="email" name="email" placeholder="Enter email">
+                    </td>
+                    <td>
+                       <span id="email_error" style="color:red;"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Mobile Number</td>
+                    <td>
+                        <input type="text" name="mobile" placeholder="Enter mobile number">
+                    </td>
+                    <td>
+                       <span id="mobile_error" style="color:red;"></span>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>Password</td>
+                    <td>
+                        <input type="password" name="upwd" placeholder="Enter password">
+                    </td>
+                    <td>
+                       <span id="upwd_error" style="color:red;"></span>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>
+                        <input type="submit" value="Register">
+                    </td>
+                    <td>
+                        <input type="reset" value="Clear">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </body>
+</html>

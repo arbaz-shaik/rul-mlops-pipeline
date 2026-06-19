@@ -1,0 +1,476 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital@0;1&family=Kanit:wght@700&display=swap');
+
+
+/* Design constants provided by tutor */
+:root {
+/* Harmonic scale */
+--ratio: 1.4142356;
+--s-5: calc(var(--s-4) / var(--ratio));
+--s-4: calc(var(--s-3) / var(--ratio)); /* Larger title font size */
+--s-3: calc(var(--s-2) / var(--ratio)); /* Smaller title font size */
+--s-2: calc(var(--s-1) / var(--ratio));
+--s-1: calc(var(--s0) / var(--ratio));
+--s0: 1rem; /* table font size */
+--s1: calc(var(--s0) * var(--ratio));
+--s2: calc(var(--s1) * var(--ratio));
+--s3: calc(var(--s2) * var(--ratio));
+--s4: calc(var(--s3) * var(--ratio));
+--s5: calc(var(--s4) * var(--ratio));
+--s6: calc(var(--s5) * var(--ratio));
+--s7: calc(var(--s6) * var(--ratio));
+
+/*created it because i had to use it in multiple places*/
+--font-size-hero: var(--s6);
+--font-size-h1:var(--s4);
+--font-size-h2:var(--s3);
+--font-size-h3:var(--s2);
+--font-size-large: var(--s1);
+--font-size-small: var(--s1-1);
+--font-size-tiny:var(--s-2); ;
+--font-size-body:var(--s0);
+
+/* white spaces */
+--page-margin: var(--s4);
+--vertical-space: var(--s2);
+--menu-space: var(--s0);
+
+/* colors */
+--frame-color: #ccc;
+/*text colorse i use throughout the site */
+--text: black;
+--border: grey;
+--hover-bg: grey;
+--hover-text: yellow;
+--footer-bg: #333;
+--white: #ffffff;
+--black : #000000;
+--frame : #ccc;
+
+}
+/* Adjust page margin for small dislays provided by tutor */
+@media only screen and (max-width: 600px) {
+:root {
+--page-margin: var(--s-2);
+--vertical-space: var(--s1);
+}
+
+}
+
+
+
+
+/*universal reset by usinh "*" selector */
+
+* {
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+/* setting base typography and overall body styles*/
+
+html {
+    font-size: 14pt;/*as per requirement */
+}
+
+body{
+    font-family : "Crimson Text", Georgia, serif;
+    color : var(--text);
+    min-width: 200px;
+    background: var(--frame-color);
+    box-shadow: #333;
+    box-shadow: inset;
+}
+
+
+/*  MAIN CONTAINER -- 80 - 90 characters wide */
+
+.container{
+    margin : 0 auto;
+    max-width: 75ch;
+     ;
+}
+
+main {
+    padding: var(--page-margin)
+}
+
+
+@media only screen and (max-width:600px){
+    main{
+        padding:var(--s1)
+    }
+
+    
+}
+
+
+/* Adding chess icons before section headings (provided by tutor) */
+
+#history h2::before{
+    content : "\2655";
+}
+
+#rules h2::before{
+    content : "\2654";
+}
+
+#training h2::before{
+    content : "\2656";
+}
+
+#man-vs-machine h2::before{
+    content : "\2657";}
+    
+
+/* header with background image */
+
+header{
+    background-image: url('assets/chessboxing_background.jpg');/* path of background image */   
+    background-repeat: no-repeat;
+    background-color: var(--black);
+    background-position: center;
+    background-size: contain;
+    height: var((--s5) * 3);
+    position: relative;
+}
+
+/*aliging header with main content*/
+header .container {
+    height: 100%;
+    min-height: calc(var(--s)*3);
+    display: flex;
+    z-index: 1;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+
+.name h1 {
+    font-family: "Kanit", Arial, sans-serif;
+    font-size: var(--s4);
+    margin-bottom: var(--s1);
+    color: var(--white);
+}
+
+@media screen and (max-width:600px){
+    .name h1{
+        font-size: var(--s3);
+    }
+    header{
+        background-position: center ;
+        background-size: contain ;
+        background-color: var(--black);
+    }
+
+    
+}
+
+/* navigation menu styles */
+
+nav {
+    align-items: flex-end;
+}
+.navbar{
+    gap: 10;
+    display:flex;
+    list-style: none;
+
+}
+
+.navbar a{
+    font-family:"Kanit", Arial, sans-serif;
+    color: var(--white);
+    text-decoration: none;
+    transition: 0.3s;
+    padding: var(--s-1) var(--menu-space);
+
+}
+/* to get that hovering effect */
+.navbar a:hover, .main-nav a:focus{
+    background:var(--hover-bg);
+    color: var(--hover-text);
+}
+/*vertical menu for small screens*/
+@media only screen and  (max-width:600px){
+    .navbar a{
+    
+        text-align: center;
+        align-items: center;
+       display: block;
+       
+    }
+    .navbar{
+        text-align: center;
+        width: 100%;
+         flex-direction: column;
+        
+    }
+    
+}
+/* Here comes the heading styling */
+h2{
+    font-size: "Montserrat", Arial, sans-serif;
+    margin: var(--vertical-space) 0 var(--s1);
+    font-size: var(--s2);
+    padding-bottom: var(--s-1);
+}
+
+@media only screen and  (max-width:600px){
+    h2 {
+        font-size: var(--s2);
+    }
+}
+
+
+
+
+/* Floating figure (it took me a while to figure this out) */
+
+#intro p{
+    width: 40%; 
+    margin-right: var(--s1);
+    float: left/* optional but helped alot with alignment */;
+    margin-right: var(--s0);
+}
+
+#intro figure{
+    float :right;
+    width: 50%;
+    margin: var(--s5) 0 var(--s1) var(--s1);
+    border: 2px solid var(--border);
+    background: var(--frame);
+    padding: var(--s-1);
+    border-radius: 15px;
+}
+
+#intro figure img{
+    width: 100%;
+    background-color: var(--white);
+}
+
+#intro figure figcaption{
+    color: var(--text);
+    font-style: italic;
+    text-align: center;
+    font-size: var(--font-size-tiny);
+}
+
+#intro {
+    overflow: auto;
+}
+
+@media only screen and  (max-width:600px){
+
+    #intro figure{
+        margin: var(--s1)0;
+        width: 100%;
+        float: none;
+    }
+
+    #intro p{
+        width: 100%;
+        float: none;
+        margin-right: 0;
+    }
+
+
+}
+
+
+
+
+/* Layout for : floating videos*/
+.video-wrap{
+    background-color: white;
+    padding: 10px ;
+    width: 50%;
+    float: inline-end;
+    margin: 0 0 20px 30px;
+    border: 2px solid var(--border);
+    border-radius: 20px;
+    background-color: var(--frame);
+    overflow: hidden;
+
+
+}
+
+/*Aligning th iframe (youtube video)*/
+.video-wrap iframe{
+     padding: 10px 10px 0px 10px;
+    size: medium;
+    background-color:var(--frame) ;
+    border: none;
+    width: 100%; 
+    height: 250px;
+
+}
+
+/* video caption styling*/
+.video-wrap figcaption{
+    color: black;
+    padding : 0 15px 15px 15px ;
+    font-style: italic;
+    text-align: center;
+    font-size: var(--font-size-tiny);
+    background-color: var(--frame);}
+
+ /*for smaller screen devices*/
+    @media only screen and (max-width:600px) {
+        .video-wrap{
+            float:none;
+            width:100%;
+            margin: var(--s1)0;
+        }
+        
+    }
+    /* for aligning the table and the image side by side (most challenging thing)*/
+
+    #history figure{
+    
+        padding: 25px;
+        width: 100%;
+        margin:40px 0;
+        float:none;
+        border:2px solid var(--border);
+        border-radius: 15px;/* using 15 px everywhere for consistence and look more similar to the screenshot */
+        background-color: var(--white);
+        overflow:hidden; /* this helped me to contain the image inside the figure (my bestie) */
+
+
+    }
+    /*to add text in the block as it contains multipe item so used last-of-type*/
+     #history figure:last-of-type::before{
+        content:'Timeline of chessboxing clubs around the world';
+        display:block;
+        font-style: italic;
+        text-align:center;
+        font-size:var(--font-size-small);
+        margin-bottom:25px;
+        color:var(--text);
+
+     }
+
+     /*sltying the table */
+     table.Location{
+        width:45%;
+        float:left;
+        border-collapse: collapse;
+        background-color: var(--white);
+        margin-right:5% ;
+        font-size: var(--font-size-small);
+        
+
+     }
+
+     table.Location tr:first-child{
+        background-color: var(--white);/* to make the header as the same color as history and figure background */
+     }
+
+     table.Location th{
+        color: var(--text);
+        padding:12px;
+        font-size: var(--font-size-tiny);
+        text-align: center;
+        border-bottom: 1px solid var(--border);
+        border-top: 1px solid var(--border);
+
+     }
+
+     table.Location td{
+        padding : 10px 12px;
+        border-bottom:transparent;
+        align-items: baseline;
+        font-size: var(--font-size-tiny);
+        text-align: left;
+        border-bottom: 1px solid var(--border);
+        
+        
+     }
+
+     /*aligning the image of map*/
+     #history figure img{
+        float: right;
+        margin-top: 3rem;
+        width:50%;
+        height: auto;
+
+     }
+
+     @media only screen and (max-width:600px){
+        table.Location{
+            float:none;
+            width:100%;
+            margin-top: var(--s1);
+        }
+        
+        #history figure{
+            padding: var(--s0);
+        }
+
+        #history figure img{
+            float:none;
+            width : 100%;
+            margin-top: var(--s1);
+        }
+     }
+
+/* quote section */
+
+#man-vs-machine p:nth-child(3)/* to choose the second para*/
+{
+    background-color: var(frame);
+    font-size: var(--font-size-body);
+    font-style: italic;
+    padding:var(--vertical-space)
+}
+ 
+#man-vs-machine p:nth-child(4)/* to choose the second para*/
+{
+    margin-left: 60%;
+    background-color: var(frame);
+    font-size: var(--font-size-body);
+    font-style: italic;
+    padding:var(--vertical-space)
+}
+
+/* media stlying */
+@media only screen and (max-width:600px){
+
+    #man-vs-machine p:nth(3),#man-vs-machine p:nth(4){
+        margin-left:0;
+        padding: var(--s0);
+    }
+}
+
+
+/*styling footer (finally)*/
+footer  {
+    color:var(--white);
+    font-size: var(--font-size-body);
+    background-color: var(--black);
+    padding : 100px 50px;
+    text-align: center;
+    
+}
+
+footer a{
+
+    color: var(--white);
+}
+
+footer a:hover{
+
+    color: var(--hover-bg);
+
+}
+
+/* final footer media stlying*/
+footer {
+    padding: var(--s3) var(--s1)
+}
+
+
+

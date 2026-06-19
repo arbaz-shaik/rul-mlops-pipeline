@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration Form</title>
+    <style>
+        form {
+            max-width: 400px;
+            margin: auto;
+            padding: 1em;
+            border: 1px solid grey;
+            border-radius: 1;
+        }
+        div {
+            margin-bottom: 1em;
+        }
+        label {
+            margin-bottom: 1em;
+            color: black;
+            display: block;
+        }
+        input, select {
+            border: 1px solid grey;
+            padding: 1em;
+            font-size: 1em;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        input[type="radio"] {
+            width: auto;
+        }
+        button {
+            padding: 1em;
+            color: ghostwhite;
+            background-color: blue;
+            border: 1px solid gray;
+            border-radius: 3em;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        button:hover {
+            background-color: rgb(135, 135, 231);
+        }
+    </style>
+</head>
+<body>
+    <form id="registrationForm">
+        <h2>Student Registration Form</h2>
+        <div>
+            <label for="studentName">Student Name</label>
+            <input type="text" id="studentName" name="studentName" required>
+        </div>
+        <div>
+            <label for="fatherName">Father Name</label>
+            <input type="text" id="fatherName" name="fatherName" required>
+        </div>
+        <div>
+            <label for="motherName">Mother Name</label>
+            <input type="text" id="motherName" name="motherName" required>
+        </div>
+        <div>
+            <label for="dob">Date of Birth</label>
+            <input type="date" id="dob" name="dob" required>
+        </div>
+        <div>
+            <label for="age">Age</label>
+            <input type="text" id="age" name="age" readonly>
+        </div>
+        <div>
+            <label for="mobile">Mobile Number</label>
+            <input type="tel" id="mobile" name="mobile" pattern="[0-9]{10}" required>
+        </div>
+        <div>
+            <label for="email">Email ID</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div>
+            <label>Gender</label>
+            <label><input type="radio" name="gender" value="Male" required> Male</label>
+            <label><input type="radio" name="gender" value="Female" required> Female</label>
+        </div>
+        <div>
+            <label for="course">Course Opted</label>
+            <select id="course" name="course" required>
+                <option value="">Select Course</option>
+                <option value="Science">Science</option>
+                <option value="Commerce">Commerce</option>
+                <option value="Arts">Arts</option>
+            </select>
+        </div>
+        <div>
+            <button type="submit">Register</button>
+        </div>
+    </form>
+    <script>
+        document.getElementById('dob').addEventListener('change', function() {
+            const dob = new Date(this.value);
+            const age = calculateAge(dob);
+            document.getElementById('age').value = age;
+        });
+
+        function calculateAge(dob) {
+            const diffMs = Date.now() - dob.getTime();
+            const ageDt = new Date(diffMs);
+            return Math.abs(ageDt.getUTCFullYear() - 1970);
+        }
+    </script>
+</body>
+</html>

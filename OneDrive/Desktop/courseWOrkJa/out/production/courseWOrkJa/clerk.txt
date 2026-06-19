@@ -1,0 +1,138 @@
+javac *.java    
+➜  CSC8023Coursework java MainProgram
+✅ Data loaded successfully.
+
+--- MENU ---
+f - Finish
+t - Display all tickets
+m - Display all members
+b - Buy tickets
+c - Cancel tickets
+Enter choice: t
+
+--- Ticket Information ---
+Fascinating Aida                    | Available: 5   | Price: £15.50
+Professor Elemental                 | Available: 11  | Price: £8.99
+Spooky Men                          | Available: 2   | Price: £10.99
+The Ukulele Orchestra of Great Britain | Available: 7   | Price: £25.30
+Weird Al                            | Available: 4   | Price: £28.99
+
+--- MENU ---
+f - Finish
+t - Display all tickets
+m - Display all members
+b - Buy tickets
+c - Cancel tickets
+Enter choice: m
+
+--- Member Information ---
+Member: Mark Jones
+  No tickets purchased.
+
+Member: Mark Smith
+  No tickets purchased.
+
+Member: Michael Jones
+  No tickets purchased.
+
+Member: Ted Smith
+  No tickets purchased.
+
+
+--- MENU ---
+f - Finish
+t - Display all tickets
+m - Display all members
+b - Buy tickets
+c - Cancel tickets
+Enter choice: b
+Enter member name (First Last): Mark Smith
+Enter ticket name: Professor Elemental 
+Enter quantity to buy: 2
+✅ Mark Smith bought 2 ticket(s) for Professor Elemental
+
+--- MENU ---
+f - Finish
+t - Display all tickets
+m - Display all members
+b - Buy tickets
+c - Cancel tickets
+Enter choice: m
+
+--- Member Information ---
+Member: Mark Jones
+  No tickets purchased.
+
+Member: Mark Smith
+  Professor Elemental                 | Qty: 2   | Subtotal: £17.98
+  Total spent: £17.98
+
+Member: Michael Jones
+  No tickets purchased.
+
+Member: Ted Smith
+  No tickets purchased.
+
+
+--- MENU ---
+f - Finish
+t - Display all tickets
+m - Display all members
+b - Buy tickets
+c - Cancel tickets
+Enter choice: c
+Enter member name (First Last): Mark Smith
+Enter ticket name: Professor Elemental 
+Enter quantity to cancel: 2
+↩️ Mark Smith cancelled 2 ticket(s) for Professor Elemental
+
+--- MENU ---
+f - Finish
+t - Display all tickets
+m - Display all members
+b - Buy tickets
+c - Cancel tickets
+Enter choice: m
+
+--- Member Information ---
+Member: Mark Jones
+  No tickets purchased.
+
+Member: Mark Smith
+  No tickets purchased.
+
+Member: Michael Jones
+  No tickets purchased.
+
+Member: Ted Smith
+  No tickets purchased.
+
+--- MENU ---
+f - Finish
+t - Display all tickets
+m - Display all members
+b - Buy tickets
+c - Cancel tickets
+Enter choice: b
+Enter member name (First Last): Mark Smith
+Enter ticket name: Weird Al
+Enter quantity to buy: 10
+❌ Not enough tickets available. Writing letter...
+
+--- MENU ---
+f - Finish
+t - Display all tickets
+m - Display all members
+b - Buy tickets
+c - Cancel tickets
+Enter choice: c
+Enter member name (First Last): f
+❌ No such member.
+
+--- MENU ---
+f - Finish
+t - Display all tickets
+m - Display all members
+b - Buy tickets
+c - Cancel tickets
+Enter choice: f

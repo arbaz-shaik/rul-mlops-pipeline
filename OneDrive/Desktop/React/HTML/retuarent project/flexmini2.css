@@ -1,0 +1,81 @@
+body{
+    margin: 0px;
+    padding: 0pc;
+}
+section{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+header,main,footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+header{
+    height: 10vh;
+    background-color: rgb(3, 47, 135);
+    display: flex; 
+}
+main{
+     height: 80vh;
+     flex-grow: 1;   
+     background-color: rgb(252, 250, 248);
+}
+footer{
+    height: 10vh;
+    background-color: rgb(25, 25, 141);
+}
+
+.miniprojectheader{
+    justify-content: space-between;
+}
+.miniprojectheader h2{
+    margin-left: 10px;
+}
+
+.miniprojectheader input[type= search ]{
+    height: 5vh;
+    width: 20%;
+    outline: none;
+    border-radius: 100px;
+
+    padding: 0px 20px;
+}
+.miniprojectheader input[type="search"]:focus{
+
+    border: white;
+}
+
+.miniprojectheadermenu { 
+    margin-right: 10px;
+   display: flex;
+   gap: 40px;
+
+
+}
+
+.miniprojectheadermenu a{
+    color: inherit;
+    text-decoration: none;
+    
+}
+
+.miniprojectheadermenu a:hover{
+    color: wheat;
+}
+
+.miniprojectmain{
+    flex-wrap: wrap;
+    overflow: auto;
+    gap: 20px;
+}
+
+.miniprojectmain img{
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 20px;
+}

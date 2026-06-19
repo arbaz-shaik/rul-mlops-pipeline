@@ -1,0 +1,20 @@
+package com.excelr;
+
+public class MethodsExamples {
+
+
+	public static void main(String[] args) {
+		
+		MethodsExamples methodsExamples = new MethodsExamples();
+	
+		methodsExamples.m1();
+
+	}
+	
+	public void m1() {
+		
+	System.out.println("welcome to method 2");
+	}
+
+}
+;

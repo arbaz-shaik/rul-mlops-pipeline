@@ -1,0 +1,91 @@
+/* Resetting default browser styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Times New Roman', Times, serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #222;
+    color: #fff;
+    padding: 20px;
+    border-bottom: 3px solid #d4af37; /* Golden border */
+}
+
+header h1 {
+    margin: 0;
+    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+    font-size: 2.5em;
+    text-transform: uppercase;
+}
+
+nav ul {
+    list-style-type: none;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+main {
+    padding: 20px;
+}
+
+.hero {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.hero h2 {
+    font-size: 3em;
+    margin-bottom: 10px;
+    color: #222;
+    font-family: 'Georgia', serif;
+}
+
+.hero p {
+    font-size: 1.4em;
+    margin-bottom: 20px;
+    color: #555;
+    font-style: italic;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #d4af37; /* Golden button */
+    color: #fff;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #b8860b; /* Dark golden hover */
+}
+
+footer {
+    background-color: #222;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    border-top: 3px solid #d4af37; /* Golden border */
+}
+
+footer p {
+    font-size: 1.2em;
+}

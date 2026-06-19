@@ -1,0 +1,142 @@
+package com.excelr;
+
+public class MethodsExamples {
+
+
+	public static void main(String[] args) {
+		
+		Demo2 d = new Demo2();
+		Demo1 = d.m2();
+		x.m1();
+		
+		
+//		Test1 test1 = new Test1();
+//		test1.m2(4,5);
+//		test1.m3(2,5);
+		
+;		
+//		MethodsExamples methodsExamples = new MethodsExamples();
+//		
+//		int x =methodsExamples.add(1,4);
+//		System.out.println("additonn.."+x);
+//		
+		
+		
+		
+		
+		
+//		MethodsExamples methodsExamples = new MethodsExamples();
+//		int x = methodsExamples.m1();
+//		byte y = methodsExamples.m2();
+//		short u = methodsExamples.m3();
+//	   float v = methodsExamples.m4();
+//	   System.out.println(u+v+x+y);
+//	   
+//	
+//		methodsExamples.m1();
+//		methodsExamples.add(1,4);
+//		methodsExamples.sub(1,4);
+//		methodsExamples.mul(1,4);
+//		methodsExamples.div(1,4);
+
+	}
+	public int add(int x, int y ) {
+		
+		int z = x+y;
+		return z;
+	}
+	
+	public int m1 () {
+		 return 100;
+		 
+	}
+	
+	public byte m2() {
+		 return 10;
+		 
+	}
+	
+	public short  m3() {
+		 return 100;
+		 
+	}
+	
+	public float m4() {
+		 return 10.3f;
+		 
+	}}
+	
+//	
+//	public void m1() {
+//		
+//	System.out.println("welcome to method 2");
+//	}
+//	
+//	public void add(int x, int y ) {
+//		
+//		int z = x+y;
+//		System.out.println("additonn.."+z);
+//		
+//	}
+//	public void sub(int x, int y) {
+//		
+//
+//		int z = x-y;
+//		System.out.println("subtraction.."+z);
+//		
+//		
+//	}
+//	public void mul(int x, int y) {
+//		
+//
+//		int z = x*y;
+//		System.out.println("multiplication.."+z);
+//		
+//	}
+//	public void div(int x, int y) {
+//		
+//
+//		int z = x/y;
+//		System.out.println("Division"+z);
+//		
+//	}
+//
+//}
+
+	
+//	public void add() {
+//		
+//		int x =4;
+//		int y = 9;
+//		int z = x+y;
+//		System.out.println("additonn.."+z);
+//		
+//	}
+//	public void sub() {
+//		
+//		int x =4;
+//		int y = 9;
+//		int z = x-y;
+//		System.out.println("subtraction.."+z);
+//		
+//		
+//	}
+//	public void mul() {
+//		
+//		int x =4;
+//		int y = 9;
+//		int z = x+y;
+//		System.out.println("multiplication.."+z);
+//		
+//	}
+//	public void div() {
+//		
+//		int x =4;
+//		int y = 9;
+//		int z = x+y;
+//		System.out.println("Division"+z);
+//		
+//	}
+//
+//}
+//;

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>
+        Dom Manupulation
+    
+      </title>
+
+      <style>
+        .c1{
+            background-color: blue;
+        }
+      </style>
+    </head>
+
+    <body>
+
+        <!-- <div id="divyy">
+            <h1 id="h10">Hello</h1>
+            <h2 id="h20">hisg</h2>
+            <p id="p1">wooww</p>
+        </div>
+
+        <h1 id="id1"></h1>
+        <h2></h2>
+        <h2></h2>
+        <h2></h2>
+        <h2></h2>
+
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+
+        <div id="id1">
+            
+        </div>
+
+        <div id="id2"></div> -->
+
+        <!-- <div id="id1">
+
+            <h1 id="myh1">
+                excerl
+            </h1>
+            <p  id="myp"  >
+                cloning
+            </p>
+            <button onclick="func_one()">CLick me</button>
+          <button onclick="func_2()">Onclick</button>
+          <button onclick="func_3()">toggle</button> -->
+
+          <button id="id22">
+            buttuu
+          </button>
+          <button id="id23">
+            cuttuu
+          </button>
+
+        </div>
+
+        <script>
+             let fun_22=()=>{
+                document.write("hihi")
+            }
+
+            let btn = document.getElementById("id22");
+            btn.addEventListener("click", fun_22);
+            let btn2 = document.getElementById("id23");
+            btn.addEventListener("click", fun_23);
+            
+            setTimeout(function(){
+                btn2.removeEventListener("click", fun_23)
+            },2000 );
+            function fun_23(){
+                console.log("heyyyaaaa")
+            }
+           
+
+        //     let  func_one=()=>{
+        //        let p1 = document.getElementById("myp");
+        //        p1.classList.add("c1")
+               
+        //     }
+
+        //     let func_2=()=>{
+              
+        //        let p1 = document.getElementById("myp");
+        //        p1.classList.remove("c1")
+        //     }
+
+        //     let func_3=()=>{
+              
+        //       let p1 = document.getElementById("myp");
+        //       p1.classList.toggle("c1")
+        //    }
+
+
+            // let p = document.getElementById("myp");
+            // document.write(p.hasAttribute("id"));
+
+            // p.setAttribute("key1","exceler");
+            // document.write(p.getAttribute("id"));
+            // document.write(p.getAttribute("key1"));
+
+            // p.removeAttribute("key1");
+
+            //  let h5 = document.createElement("h5");
+            //  h5.innerHTML= "boom boom chao";
+            //  let p = document.getElementById("myp");
+            //  let div = document.getElementById("id1");
+            //  div.insertBefore(h5,p);
+             
+
+        //   //// document.getElementById("id1").innerHTML ="welcome to exelr!!";
+        //    //let h2= document.getElementsByTagName("h2");
+        //    //h2[0].innerHTML = "first";
+
+        //    //for (let h20 of h2){
+        //     //h20.innerHTML="hello arbaz"
+        //   // }
+
+        //    let p1 = document.getElementsByTagName("p");
+
+        //    for(let p of p1 ){
+        //     p.innerHTML="first"
+        //    }
+
+        //    let h1 = document.createElement("h1");
+        //     h1.textContent="A new element created just now";
+        //     document.getElementById("id1").appendChild(h1);
+
+        //     let h2 = document.createElement("h2");
+        //     h2.textContent="hey hi";
+        //     document.getElementById("id2").appendChild(h2);
+
+        //   h1 = document.getElementById("h10");
+        //   let p = document.getElementById("p1");
+        //   let div = document.getElementById("divyy");
+        //   div.removeChild(h1);
+        //   div.removeChild(p)
+        // let h1 = document.getElementById("myh1");
+        // let div = document.getElementById("id1");
+
+        // let p = document.createElement("p");
+        // p.innerHTML="wowowowoowow";
+        // div.replaceChild(p,h1)
+
+        // let h1 = document.getElementById("myh1");
+        // let xh = h1.cloneNode(true);
+        // let div = document.getElementById("id1");
+        // div.appendChild(xh);
+
+        // let p1 = document.getElementById("myid");
+        // let xp = p1.cloneNode(true);
+        // div.appendChild(xp)
+        </script>
+    </body>
+</html>

@@ -1,0 +1,284 @@
+/* chessboxing.css
+   Starter/complete stylesheet for the CSC8018 chessboxing coursework.
+   - Uses Crimson Text for body, Kanit for headings
+   - Centre the white content block
+   - Responsive navbar (horizontal >600px, vertical <=600px)
+   - Floats for images that disable on small screens
+   - Header background stays centred and visible
+   - Hover effect uses translucent white + yellow text
+*/
+
+/* fonts */
+@import url("https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Kanit:wght@400;700&display=swap");
+
+/* design variables */
+:root{
+  --max-width: 760px;              /* keeps approx 80-90 chars per line */
+  --page-gutter: 1rem;
+  --page-bg: #dcdcdc;              /* overall page background (light grey like screenshot) */
+  --card-bg: #ffffff;              /* main white block */
+  --muted: #444;
+  --accent-yellow: #ffd600;        /* yellow used on hover */
+  --nav-hover-bg: rgba(255,255,255,0.9); /* equivalent to #fff6-ish translucent white */
+  --frame-radius: 8px;
+  --shadow: 0 6px 18px rgba(0,0,0,0.08);
+  --breakpoint-mobile: 600px;
+}
+
+/* Reset / base */
+* { box-sizing: border-box; }
+html,body { height: 100%; margin: 0; padding: 0; }
+body{
+  font-family: "Crimson Text", Georgia, "Times New Roman", serif;
+  background: var(--page-bg);
+  color: var(--muted);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+/* Skip link visible when focused */
+.skip-link{
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+  width: auto;
+  height: auto;
+  padding: .5rem .75rem;
+  background: #000;
+  color: #fff;
+  z-index: 1000;
+  border-radius: 4px;
+}
+
+/* Header with background image - uses inline style in HTML for url().
+   Provide safe fallback styling here. */
+#site-header{
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 2.25rem 0;
+  box-shadow: inset 0 -30px 40px rgba(0,0,0,0.35); /* gentle darkening to keep text readable */
+  color: white;
+}
+.header-inner{
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--page-gutter);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+h1{
+  margin: 0;
+  font-family: "Kanit", Arial, sans-serif;
+  font-weight: 700;
+  font-size: 2.6rem;
+  line-height: 1;
+  color: #fff;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.45);
+}
+.tagline{
+  margin: 0 0 0 .25rem;
+  font-size: 0.95rem;
+  opacity: .95;
+  color: #fff;
+}
+
+/* Navigation layout - aligns with the right edge of the main text block */
+nav{
+  margin-top: 0.25rem;
+  margin-bottom: 1rem;
+}
+nav .main-nav,
+.container nav .main-nav{
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--page-gutter);
+}
+.main-nav{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: flex-end;    /* right-align with the container */
+  gap: .5rem;
+  align-items: center;
+}
+.main-nav li { margin: 0; }
+.main-nav a{
+  display: inline-block;
+  text-decoration: none;
+  color: #fff;                  /* white links on top of dark header area - good contrast */
+  padding: .45rem .65rem;
+  border-radius: 6px;
+  font-family: "Crimson Text", Georgia, serif;
+  font-weight: 600;
+  font-size: .95rem;
+  transition: background .15s ease, color .15s ease;
+}
+.main-nav a:hover,
+.main-nav a:focus{
+  background: var(--nav-hover-bg);
+  color: var(--accent-yellow);
+  outline: none;
+  text-decoration: none;
+}
+
+/* Main white content block */
+.container{
+  max-width: var(--max-width);
+  margin: 0 auto 2.5rem;
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 6px;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+/* Ensure first section spacing looks like screenshot */
+.container h2:first-of-type { margin-top: 0.25rem; }
+
+/* content elements */
+article, section, aside {
+  margin-bottom: 1.25rem;
+}
+h2, h3 {
+  font-family: "Kanit", Arial, sans-serif;
+  color: #111;
+  margin-top: 0.75rem;
+  margin-bottom: .5rem;
+}
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.1rem; }
+
+/* Figures and floats */
+figure { margin: 0 0 1rem 0; }
+figure img { display: block; max-width: 100%; height: auto; border-radius: 6px; }
+figure figcaption {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: .35rem;
+  text-align: center;
+  font-style: italic;
+}
+
+/* float helpers */
+.float-right {
+  float: right;
+  margin-left: 1rem;
+  margin-bottom: 0.6rem;
+  max-width: 40%;
+  width: auto;
+  clear: none;
+}
+.float-left {
+  float: left;
+  margin-right: 1rem;
+  margin-bottom: 0.6rem;
+  max-width: 40%;
+  width: auto;
+}
+
+/* Make sure text wraps around floats nicely */
+p, ul, ol, blockquote, table { overflow-wrap: break-word; }
+
+/* Lists inside rules: smaller markers */
+ul { margin-left: 1.05rem; }
+
+/* Embedded media (video) */
+.embedded-media {
+  margin: 0 0 1rem 0;
+  border-radius: var(--frame-radius);
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+}
+
+/* Tables (timeline) */
+table.timeline {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.75rem 0;
+  background: #fff;
+}
+table.timeline th, table.timeline td {
+  text-align: left;
+  padding: .5rem .6rem;
+  border-bottom: 1px solid #eee;
+  font-size: .95rem;
+}
+table.timeline thead th { font-weight: 700; background: transparent; }
+
+/* blockquote */
+blockquote {
+  border-left: 4px solid #ddd;
+  margin: 0.75rem 0;
+  padding: .5rem 1rem;
+  color: #333;
+  background: rgba(0,0,0,0.02);
+}
+
+/* footer */
+footer {
+  max-width: var(--max-width);
+  margin: 0 auto 2rem;
+  padding: 0 var(--page-gutter);
+  color: #666;
+  font-size: .9rem;
+  text-align: center;
+}
+
+/* Focus styles for keyboard users */
+a:focus, button:focus, input:focus, textarea:focus {
+  outline: 3px solid rgba(255,214,50,0.25);
+  outline-offset: 2px;
+}
+
+/* Responsive rules */
+@media (max-width: 600px) {
+  :root { --page-gutter: 0.75rem; }
+  .header-inner { padding: 0 var(--page-gutter); }
+  h1 { font-size: 1.8rem; }
+  .main-nav {
+    flex-direction: column;
+    align-items: stretch;
+    gap: .25rem;
+    justify-content: center;
+  }
+  .main-nav a {
+    color: #111;                /* on mobile nav sits on light bg so make link dark */
+    background: transparent;
+    text-align: center;
+    padding: .6rem .5rem;
+  }
+  /* floats become block and centred on small screens */
+  .float-right, .float-left {
+    float: none;
+    margin: 0 auto 1rem auto;
+    display: block;
+    max-width: 90%;
+  }
+  .container { padding: 1rem; }
+}
+
+/* Ensure layout stays usable at very small widths */
+@media (max-width: 260px) {
+  body { font-size: 14px; line-height: 1.4; }
+  h1 { font-size: 1.4rem; }
+  .container { padding: .6rem; }
+}
+
+/* Utility: clear floats when needed */
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}

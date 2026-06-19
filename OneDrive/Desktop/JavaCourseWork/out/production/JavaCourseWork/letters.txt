@@ -1,0 +1,39 @@
+Dear Bob,
+Unfortunately, your request for 4 of ticket ID 101 cannot be fulfilled.
+
+--------------------------------------------------
+Dear Mark Smith,
+
+We regret to inform you that your request for 10 ticket(s) to 'Weird Al' could not be fulfilled,
+as there are not enough tickets currently available.
+
+Please try again later or choose another event.
+
+Kind regards,
+Ticket Office
+--------------------------------------------------
+
+--------------------------------------------------
+Dear Ted Smith,
+
+We regret to inform you that your request for 3 ticket(s) to 'Spooky Men' could not be fulfilled,
+as there are not enough tickets currently available.
+
+Please try again later or choose another event.
+
+Kind regards,
+Ticket Office
+--------------------------------------------------
+
+--------------------------------------------------
+Dear Mark Jones,
+
+We regret to inform you that your request for 1 ticket(s) to 'Spooky Men' could not be fulfilled,
+as there are not enough tickets currently available.
+
+Please try again later or choose another event.
+
+Kind regards,
+Ticket Office
+--------------------------------------------------
+

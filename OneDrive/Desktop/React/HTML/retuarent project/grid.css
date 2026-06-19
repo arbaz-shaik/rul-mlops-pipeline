@@ -1,0 +1,42 @@
+body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.parent{
+    display: grid;
+    height: 100vh;
+    grid-template-rows: 10% 80% 10%;
+    grid-template-columns: 15% 70% 15%;
+    
+}
+.grid_header{
+    background-color: lightblue;
+    grid-column: 1/4;
+    grid-row: 1/2;
+}
+.leftmenu{
+    background-color: aqua;
+    grid-column: 1/2;
+    grid-row: 2/3;
+}
+.main{
+    background-color: lightgray;
+    grid-column: 2/3;
+    grid-row: 2/3;
+}
+.rightmenu{
+    background-color: aqua;
+    grid-column: 3/4;
+    grid-row: 2/3;
+}
+.footer{
+    background-color: lightblue;
+    grid-column: 1/4;
+    grid-row: 3/4;
+}
+.grid_header,.leftmenu,.rightmenu,.main,.footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

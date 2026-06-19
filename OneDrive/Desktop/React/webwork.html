@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <title>web wroker</title>
+
+    <body>
+        
+        <script>
+            let task1 = new Worker("addition.js");
+            task1.postMessage({"num1": 20, "num2":10});
+            task1.onmessage= function (event){
+            
+                let res1 = event.data;
+                document.write(res1,`<br>`);
+            }
+
+            let task2 = new Worker("sub.js");
+            task2.postMessage(
+                {"num1": 20, "num2":10}
+            )
+            task2.onmessage= function (event){
+            
+            let res2 = event.data;
+            document.write(res2,`<br>`);
+        }
+
+        let task3 = new Worker("mul.js");
+            task3.postMessage(
+                {"num1": 20, "num2":10}
+            )
+            task3.onmessage= function (event){
+            
+            let res3 = event.data;
+            document.write(res3,`<br>`);
+        }
+            
+        </script>
+    </body>
+</html>
