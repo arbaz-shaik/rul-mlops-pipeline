@@ -64,3 +64,9 @@ as a Docker service using ghcr.io/mlflow/mlflow image with
 a named volume for persistence. Scripts on the host log to 
 it via localhost:5000. Scripts inside the Docker network 
 log to it via the service name mlflow:5000.
+
+[2026-06-30] Data: capped RUL labels at 125 because engines early
+in life show no degradation signal, and predicting RUL above 125
+adds noise that dominates MSE loss. Standard practice in all
+published CMAPSS benchmarks (Wu 2019, Li 2018, SJSU 2024).
+

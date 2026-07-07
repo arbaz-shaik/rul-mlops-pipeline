@@ -3,9 +3,11 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
 import torch
 from torch.utils.data import DataLoader, TensorDataset
-
 from src.model.lstm import RULModel
+import mlflow
+import mlflow.pytorch
 
+mlflow.set_experiment("rul-experiment")
 
 x_train = np.load("./data/processed/x_train.npy")
 y_train = np.load("./data/processed/y_train.npy")
@@ -62,6 +64,15 @@ best_rmse = float("inf")
 patience_counter = 0
 num_epochs = 50
 
+mlflow.start_run()
+mlflow.log_param("lr", 0.001)
+mlflow.log_param("batch_size", 32)
+mlflow.log_param("hidden_size_1", 64)
+mlflow.log_param("hidden_size_2", 32)
+mlflow.log_param("dropout", 0.2)
+mlflow.log_param("max_epochs", 50)
+mlflow.log_param("rul_cap", 125)
+
 for epoch in range(num_epochs):
 
     pred_model.train()
@@ -100,7 +111,8 @@ for epoch in range(num_epochs):
             targets.extend(batch_y.cpu().numpy())
 
     val_rmse = np.sqrt(mean_squared_error(targets, predictions))
-
+    mlflow.log_metric("val_rmse", val_rmse, step=epoch)
+    mlflow.log_metric("train_loss", train_loss, step=epoch)
     if val_rmse < best_rmse:
 
         best_rmse = val_rmse
@@ -123,3 +135,14 @@ for epoch in range(num_epochs):
         break
 
 print(f"Best Validation RMSE: {best_rmse:.4f}")
+pred_model.load_state_dict(torch.load("best_model.pth"))
+
+mlflow.pytorch.log_model(
+    pytorch_model=pred_model,
+    artifact_path="model",
+    registered_model_name="RULModel",
+    input_example=np.random.randn(1, 30, 14).astype(np.float32),
+    serialization_format="pickle"
+)
+mlflow.log_metric("best_val_rmse", best_rmse)
+mlflow.end_run()
