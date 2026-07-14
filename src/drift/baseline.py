@@ -15,7 +15,7 @@ from src.config import FEATURE_COLUMNS, settings
 def build_reference():
     """Load training windows, validate against the scaler, persist reference."""
     processed_dir = Path(settings.processed_data_dir)
-    x_train_path = processed_dir / "X_train.npy"
+    x_train_path = processed_dir / "x_train.npy"
     scaler_path = processed_dir / "scaler.pkl"
     reference_path = Path(settings.reference_data_path)
 
@@ -55,3 +55,5 @@ def build_reference():
 
 if __name__ == "__main__":
     build_reference()
+
+

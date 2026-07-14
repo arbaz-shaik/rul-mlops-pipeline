@@ -70,3 +70,18 @@ in life show no degradation signal, and predicting RUL above 125
 adds noise that dominates MSE loss. Standard practice in all
 published CMAPSS benchmarks (Wu 2019, Li 2018, SJSU 2024).
 
+[2026-07-14] Model: chose 2-layer LSTM with hidden sizes 64 then 32
+(bottleneck design) because decreasing sizes force compression and
+reduce overfitting on FD001's small dataset. Consistent with Wu 2019.
+
+[2026-07-14] Data: capped RUL labels at 125 because engines early in
+life show no degradation signal. Standard CMAPSS practice (Wu 2019,
+Li 2018).
+
+[2026-07-14] MLflow: used pickle serialization format because pt2
+format fails on LSTM dynamic shapes with MLflow 3.14.
+
+[2026-07-14] Serving: added fallback model loading from local file
+because MLflow artifact proxy in Docker requires shared volume
+configuration. Production fix planned for Phase 5.
+[2026-07-14] Reproducibility: froze the re-fit scaler.pkl (sklearn 1.4.2) and reference_data.parquet into the repo via git add -f (Plan B), rather than regenerating via make data (Plan D), because no committed script builds the processed arrays from raw: create_windowed_features exists but is uncalled, and trainer.py loads x_train.npy without creating it. Plan D deferred to a separate block that extracts notebook array-building into pipeline/build_arrays.py. Large arrays remain git-ignored. Also fixed: baseline.py and refit_scaler.py loaded X_train.npy (uppercase) which breaks on case-sensitive Docker filesystems; corrected to lowercase x_train.npy to match the real files and trainer.py.
