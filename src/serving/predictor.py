@@ -1,6 +1,6 @@
 import numpy as np
 import torch
-import os
+
 
 MODEL_NAME = "RULModel"
 MODEL_VERSION = "1"
