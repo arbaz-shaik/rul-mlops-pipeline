@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
 
   api:
@@ -10,17 +8,17 @@ services:
       - '8000:8000'
     environment:
       - MLFLOW_TRACKING_URI=http://mlflow:5000
-      - MODEL_REGISTRY_NAME=rul-lstm
-      - LOG_LEVEL=INFO
     depends_on:
       - mlflow
       - prometheus
     volumes:
       - ./src:/app/src
       - ./data:/app/data
+      - ./best_model.pth:/app/best_model.pth
+
 
   mlflow:
-    image: ghcr.io/mlflow/mlflow:v2.13.0
+    image: ghcr.io/mlflow/mlflow:v3.14.0
     ports:
       - '5000:5000'
     command: >
@@ -29,6 +27,8 @@ services:
       --port 5000
       --backend-store-uri sqlite:///mlflow.db
       --default-artifact-root /mlflow/artifacts
+      --serve-artifacts
+      --allowed-hosts "mlflow,mlflow:5000,localhost,localhost:5000"
     volumes:
       - ./mlflow-data:/mlflow
 
@@ -52,50 +52,5 @@ services:
     volumes:
       - grafana-data:/var/lib/grafana
 
-  drift-detector:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    environment:
-      - MLFLOW_TRACKING_URI=http://mlflow:5000
-      - DRIFT_PSI_THRESHOLD=0.2
-    depends_on:
-      - api
-    volumes:
-      - ./src:/app/src
-      - ./data:/app/data
-
-  retrainer:
-    build:
-      context: .
-      dockerfile: Dockerfile.retrain
-    environment:
-      - MLFLOW_TRACKING_URI=http://mlflow:5000
-      - MODEL_REGISTRY_NAME=rul-lstm
-      - BOOTSTRAP_RESAMPLES=1000
-    depends_on:
-      - mlflow
-      - drift-detector
-    volumes:
-      - ./src:/app/src
-      - ./data:/app/data
-
-  shadow-validator:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    environment:
-      - MLFLOW_TRACKING_URI=http://mlflow:5000
-      - MODEL_REGISTRY_NAME=rul-lstm
-      - SHADOW_CI_THRESHOLD=0.95
-      - BOOTSTRAP_RESAMPLES=1000
-    depends_on:
-      - mlflow
-      - api
-    volumes:
-      - ./src:/app/src
-      - ./data:/app/data
-
 volumes:
   grafana-data:
-  mlflow-data:
