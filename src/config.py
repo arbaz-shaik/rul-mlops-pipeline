@@ -34,7 +34,13 @@ class Settings(BaseSettings):
     post_promotion_monitor_window: int = 200
     rollback_residual_delta: float = 3.0
 
+    
     model_config = SettingsConfigDict(env_file=".env", case_sensitive=False)
-
+    processed_data_dir: str = "data/processed"
+    raw_data_dir: str = "data/raw"
+    reference_data_path: str = "data/processed/reference_data.parquet"
+# features
+FEATURE_COLUMNS = ["s2", "s3", "s4", "s7", "s8", "s9", "s11",
+                   "s12", "s13", "s14", "s15", "s17", "s20", "s21"]
 
 settings = Settings()

@@ -1,5 +1,6 @@
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
+import pandas as pd
 
 def create_windowed_features(df, feature_cols, window_size=30):
     sensor_data = df[feature_cols].to_numpy()
@@ -28,3 +29,16 @@ def fit_scaler(df, feature_cols):
     scaler = MinMaxScaler()
     scaler.fit(df[feature_cols])
     return scaler
+
+
+
+RAW_COLUMNS = ["unit", "cycle", "os1", "os2", "os3"] + [f"s{i}" for i in range(1, 22)]
+
+
+def load_raw(path):
+    """Load a headerless space-delimited CMAPSS file with canonical column names.
+
+    Single source of truth for raw CMAPSS loading. Names match the original
+    EDA preprocessing: unit, cycle, os1..os3, s1..s21.
+    """
+    return pd.read_csv(path, sep=r"\s+", header=None, names=RAW_COLUMNS)
