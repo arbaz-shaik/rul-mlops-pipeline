@@ -85,3 +85,58 @@ format fails on LSTM dynamic shapes with MLflow 3.14.
 because MLflow artifact proxy in Docker requires shared volume
 configuration. Production fix planned for Phase 5.
 [2026-07-14] Reproducibility: froze the re-fit scaler.pkl (sklearn 1.4.2) and reference_data.parquet into the repo via git add -f (Plan B), rather than regenerating via make data (Plan D), because no committed script builds the processed arrays from raw: create_windowed_features exists but is uncalled, and trainer.py loads x_train.npy without creating it. Plan D deferred to a separate block that extracts notebook array-building into pipeline/build_arrays.py. Large arrays remain git-ignored. Also fixed: baseline.py and refit_scaler.py loaded X_train.npy (uppercase) which breaks on case-sensitive Docker filesystems; corrected to lowercase x_train.npy to match the real files and trainer.py.
+
+[2026-07-14] Data: chose to re-fit the scaler on the raw FD001 training
+features (data/raw/train_FD001.txt, loaded via the preprocess feature-selection
+step) over bumping scikit-learn to 1.6.1 or fitting on the already-scaled
+x_train.npy, because the processed array is normalised to [0,1] and would yield
+an identity scaler, the raw file is the only valid fit source, and re-fitting
+under the pinned 1.4.2 removes the InconsistentVersionWarning at source without
+re-validating the stack against a newer library after the project lock.
+
+[2026-07-14] Reproducibility: chose Plan B, freezing the re-fit scaler.pkl and
+reference_data.parquet into the repo via git add -f while leaving the large
+arrays git-ignored, over a full regenerate-on-clone approach, because
+pipeline/preprocess.py is not yet wired end to end (the array-builder is
+uncalled), so a fresh clone cannot yet rebuild the processed artefacts
+deterministically. To migrate to a source-plus-recipe approach (make data) once
+the array-builder exists.
+
+[2026-07-14] Deployment: chose a hybrid packaging for the three closed-loop
+components, drift-detector as a continuous service and retrainer plus
+shadow-validator as on-demand jobs, over modelling all three as long-running
+services, because the detector must observe the stream continuously while
+retraining and shadow-validation are event-scoped work that runs on a trigger
+and exits, and modelling triggered work as always-on services would mirror the
+fixed-cron Ablation 1 the pipeline is designed to outperform.
+
+[2026-07-14] Serving: chose to load the production model by MLflow alias
+(models:/RULModel@production, MLflow 3.x alias API) over pinning a fixed version
+number, because the shadow validator promotes by moving the alias, so serving
+adopts a newly promoted model with no config change or redeploy, which the
+pinned-version approach could not provide without a manual deployment step.
+
+[2026-07-14] MLflow infra: chose to fix artifact retrieval by having the
+tracking server serve artifacts over HTTP (dropped the bare
+--default-artifact-root that overrode the proxy, added --artifacts-destination,
+let the root default to the mlflow-artifacts:/ scheme) over registering from the
+host or sharing a bind-mount, because all three Phase 5 clients must fetch
+artifacts identically over the network, whereas host-side registration or shared
+mounts fix only one client and break fresh-clone portability.
+
+[2026-07-14] Serving: chose to remove the local best_model.pth fallback and the
+bare except from predictor.py so serving loads registry-only and fails loudly on
+a miss, over keeping a fallback with improved logging or a dashboard-visible
+fallback, because the silent fallback had masked a broken registry load since
+Phase 4, and a single loading path that fails loudly cannot serve a stale model
+unnoticed.
+
+[2026-07-14] Environment: chose to build a Python 3.12 venv matching the Docker
+base over remaining on the global 3.13, because 3.13 lacked prebuilt numpy wheels
+and forced source builds that failed; matching the container Python removes
+local-versus-Docker divergence.
+
+[2026-07-14] Build: chose to add a .dockerignore excluding mlflow-data, data, and
+.git over the implicit COPY . . behaviour, because the build context was 147 MB
+and swept in artefacts and history that do not belong in the serving image.
+
