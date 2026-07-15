@@ -1,6 +1,4 @@
---extra-index-url https://download.pytorch.org/whl/cpu
-
-
+﻿--extra-index-url https://download.pytorch.org/whl/cpu
 
 #servie layer
 fastapi==0.111.0

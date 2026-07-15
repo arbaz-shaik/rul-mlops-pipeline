@@ -1,27 +1,34 @@
-import numpy as np
+﻿import numpy as np
 import torch
+import mlflow
+import mlflow.pytorch
 
+from src.config import settings
 
-MODEL_NAME = "RULModel"
-MODEL_VERSION = "1"
 
 def load_model():
-    """Load model from MLflow or fallback to local file."""
-    try:
-        import mlflow.pytorch
-        model = mlflow.pytorch.load_model(f"models:/{MODEL_NAME}/{MODEL_VERSION}")
-    except Exception:
-        from src.model.lstm import RULModel
-        model = RULModel()
-        model.load_state_dict(torch.load("best_model.pth", map_location="cpu"))
-    return model.eval()
+    """Load the production model from the MLflow registry by alias.
 
-model = load_model()
+    No local fallback. A failure raises loudly at startup rather than
+    silently serving stale weights.
+    """
+    mlflow.set_tracking_uri(settings.mlflow_tracking_uri)
+    uri = f"models:/{settings.model_registry_name}@{settings.model_alias}"
+    model = mlflow.pytorch.load_model(uri).eval()
+    client = mlflow.MlflowClient()
+    version = client.get_model_version_by_alias(
+        settings.model_registry_name, settings.model_alias
+    ).version
+    return model, version
+
+
+model, served_version = load_model()
+
 
 def predict_rul(input_data: np.ndarray) -> float:
     with torch.no_grad():
         input_tensor = torch.tensor(input_data, dtype=torch.float32)
         if input_tensor.dim() == 2:
-            input_tensor = input_tensor.unsqueeze(0)  # add batch dimension
+            input_tensor = input_tensor.unsqueeze(0)
         prediction = model(input_tensor)
         return prediction.item()
