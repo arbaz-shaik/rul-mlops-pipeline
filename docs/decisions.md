@@ -140,3 +140,32 @@ local-versus-Docker divergence.
 .git over the implicit COPY . . behaviour, because the build context was 147 MB
 and swept in artefacts and history that do not belong in the serving image.
 
+[2026-07-15] Drift: chose the maximum per-feature PSI as the aggregate
+dataset-level drift score, over the mean or a count/share of drifted features,
+because no consulted source specified an aggregation method, and the maximum
+preserves the per-feature nature of PSI (Arize establishes PSI as a per-feature
+metric, not a covariant one) while keeping the aggregate on the PSI scale so the
+0.2 threshold remains valid. The mean was rejected because the drift-injection
+harness perturbs individual sensors, and averaging would dilute a single
+strongly drifted sensor below the threshold, causing the pipeline to miss
+injected drift in its own experiments.
+
+[2026-07-15] Drift: chose to implement trigger.py as a single PSI-based trigger
+(aggregate PSI above threshold fires retraining), matching the proposal, which
+committed to PSI as the sole trigger. The residual-EMA dual trigger from the
+17 June architecture review was a post-proposal-lock enhancement for the
+publication path, not a committed objective, and is deferred as optional given
+the schedule. The dissertation describes PSI-only triggering to keep the
+write-up consistent with what was built and promised.
+
+[2026-07-15] Drift: the detector-to-trigger contract is compute_drift returning
+(per-feature PSI dict, aggregate max PSI float) with no boolean, so measurement
+lives in detector.py and the threshold decision lives solely in trigger.py,
+keeping the two components independently testable per the layer design.
+
+[2026-07-15] Observability: the drift_score_current Prometheus gauge is defined
+once in src/serving/metrics.py and imported by both the serving app and
+trigger.py, rather than defined in either consumer, to avoid a
+duplicate-timeseries registration crash and to guarantee the value trigger.py
+sets is the same object exposed on the /metrics endpoint and scraped into
+Grafana.
