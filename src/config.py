@@ -20,6 +20,8 @@ class Settings(BaseSettings):
     adam_lr: float = 0.001
     batch_size: int = 32
     early_stopping_patience: int = 10
+    max_epochs: int = 50
+    rul_cap: int = 125
 
     # drift
     psi_drift_threshold: float = 0.2
@@ -45,3 +47,4 @@ FEATURE_COLUMNS = ["s2", "s3", "s4", "s7", "s8", "s9", "s11",
                    "s12", "s13", "s14", "s15", "s17", "s20", "s21"]
 
 settings = Settings()
+

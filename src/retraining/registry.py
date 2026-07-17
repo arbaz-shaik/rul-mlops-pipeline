@@ -2,7 +2,8 @@
 
 Single registration path shared by the baseline registration and the Day 2
 retrainer, so the two cannot diverge. Registers a PyTorch model into the
-MLflow registry under the configured name.
+MLflow registry under the configured name, logging any provenance (params,
+tags, metrics) into the same run as the model.
 """
 import mlflow
 import mlflow.pytorch
@@ -10,16 +11,24 @@ import mlflow.pytorch
 from src.config import settings
 
 
-def register_model(model, name=None, input_example=None):
+def register_model(model, name=None, input_example=None,
+                   params=None, tags=None, metrics=None):
     """Log and register a PyTorch model into the MLflow registry.
 
     Uses pickle serialization: pt2 (the 3.x default) fails on the LSTM
-    dynamic sequence shapes, per Phase 4. Registration target is
-    settings.mlflow_tracking_uri.
+    dynamic sequence shapes, per Phase 4. Provenance (params, tags, metrics)
+    is logged into the same run as the model so it stays attached to the
+    registered version. Registration target is settings.mlflow_tracking_uri.
     """
     name = name or settings.model_registry_name
     mlflow.set_tracking_uri(settings.mlflow_tracking_uri)
     with mlflow.start_run():
+        if params:
+            mlflow.log_params(params)
+        if tags:
+            mlflow.set_tags(tags)
+        if metrics:
+            mlflow.log_metrics(metrics)
         model_info = mlflow.pytorch.log_model(
             pytorch_model=model,
             artifact_path="model",
