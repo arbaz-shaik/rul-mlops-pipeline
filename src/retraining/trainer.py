@@ -17,6 +17,7 @@ from sklearn.metrics import mean_squared_error
 from src.config import settings
 from src.model.lstm import RULModel
 from src.retraining.registry import register_model
+from src.retraining.dataset import apply_blend_gate
 
 
 def train_model(X, y, settings):
@@ -138,7 +139,9 @@ def run_retraining(X_window, y_window, drift_score):
 
     mlflow.set_experiment(settings.mlflow_experiment_name)
     start = time.time()
-    model, best_rmse, _ = train_model(X_window, y_window, settings)
+    X, y, ood_proportion, blend_applied = apply_blend_gate(X_window, y_window, settings)
+
+    model, best_rmse, _ = train_model(X, y, settings)
     duration = time.time() - start
 
     info = register_model(
@@ -155,6 +158,10 @@ def run_retraining(X_window, y_window, drift_score):
             "window_rows": int(X_window.shape[0]),
             "window_shape": str(X_window.shape),
             "training_duration_s": round(duration, 2),
+
+            "ood_proportion": round(ood_proportion, 4),
+
+            "blend_applied": blend_applied,
         },
         metrics={"best_val_rmse": best_rmse},
     )
@@ -165,3 +172,4 @@ def run_retraining(X_window, y_window, drift_score):
 
 if __name__ == "__main__":
     train_baseline()
+
