@@ -17,3 +17,13 @@ shadow_min_predictions_hit = Counter(
     "shadow_min_predictions_hit",
     "Times the shadow validation window (min predictions) was reached",
 )
+
+shadow_promotions_total = Counter(
+    "shadow_promotions_total",
+    "Challengers promoted to production after passing shadow validation",
+)
+
+shadow_rejections_total = Counter(
+    "shadow_rejections_total",
+    "Challengers rejected by shadow validation (not statistically better)",
+)
