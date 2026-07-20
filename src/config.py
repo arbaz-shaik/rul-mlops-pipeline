@@ -25,6 +25,8 @@ class Settings(BaseSettings):
 
     # drift
     psi_drift_threshold: float = 0.2
+    drift_check_interval_s: int = 30
+    retrainer_url: str = "http://retrainer:8001/retrain"
     residual_ema_threshold: float = 5.0
 
     # retraining
@@ -47,4 +49,5 @@ FEATURE_COLUMNS = ["s2", "s3", "s4", "s7", "s8", "s9", "s11",
                    "s12", "s13", "s14", "s15", "s17", "s20", "s21"]
 
 settings = Settings()
+
 

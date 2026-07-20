@@ -14,7 +14,6 @@
       - ./src:/app/src
       - ./data:/app/data
       - ./best_model.pth:/app/best_model.pth
-
   mlflow:
     image: ghcr.io/mlflow/mlflow:v3.14.0
     ports:
@@ -29,7 +28,6 @@
       --allowed-hosts "mlflow,mlflow:5000,localhost,localhost:5000"
     volumes:
       - ./mlflow-data:/mlflow
-
   prometheus:
     image: prom/prometheus:latest
     ports:
@@ -38,7 +36,6 @@
       - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
-
   grafana:
     image: grafana/grafana:latest
     ports:
@@ -49,6 +46,33 @@
       - GF_SECURITY_ADMIN_PASSWORD=admin
     volumes:
       - grafana-data:/var/lib/grafana
-
+  retrainer:
+    build:
+      context: .
+      dockerfile: Dockerfile.retrain
+    ports:
+      - "8001:8001"
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+    depends_on:
+      - mlflow
+    volumes:
+      - ./src:/app/src
+      - ./data:/app/data
+      - ./best_model.pth:/app/best_model.pth
+  drift-detector:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["python", "-m", "src.drift.service"]
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+      - RETRAINER_URL=http://retrainer:8001/retrain
+    depends_on:
+      - mlflow
+      - retrainer
+    volumes:
+      - ./src:/app/src
+      - ./data:/app/data
 volumes:
   grafana-data:
