@@ -47,7 +47,13 @@ def validate(challenger_version, X_eval, y_eval):
 
     production_preds = _predict(production, X_eval)
     shadow_preds = _predict(challenger, X_eval)
-    y_true = np.asarray(y_eval, dtype=float).ravel()
+
+    # Evaluate on the CAPPED target. Every registered model (champion v3 and all
+    # challengers) is trained via train_model, which caps labels at
+    # settings.rul_cap. The RMSE comparison must use the same capped target the
+    # models learned, or it would score them against a target neither was trained
+    # on and bias production_RMSE - shadow_RMSE by an unknown amount.
+    y_true = np.minimum(np.asarray(y_eval, dtype=float).ravel(), settings.rul_cap)
 
     ci = bootstrap_rmse_diff(
         shadow_preds, production_preds, y_true,
