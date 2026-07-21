@@ -1,6 +1,4 @@
-﻿
-
-from pydantic_settings import BaseSettings, SettingsConfigDict
+﻿from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
@@ -28,6 +26,9 @@ class Settings(BaseSettings):
     drift_check_interval_s: int = 30
     retrainer_url: str = "http://retrainer:8001/retrain"
     residual_ema_threshold: float = 5.0
+    drift_batch_size: int = 500          # rows per detection batch; clean reads ~0.1 stably
+    drift_batch_interval_s: float = 5.0  # seconds between batches; latency = n_batches * this
+    drift_medium_k: float = 0.375        # s9 offset multiplier, medium intensity, PSI ~0.5
 
     # retraining
     retraining_blend_ratio: float = 0.3
@@ -39,15 +40,14 @@ class Settings(BaseSettings):
     post_promotion_monitor_window: int = 200
     rollback_residual_delta: float = 3.0
 
-    
     model_config = SettingsConfigDict(env_file=".env", case_sensitive=False)
     processed_data_dir: str = "data/processed"
     raw_data_dir: str = "data/raw"
     reference_data_path: str = "data/processed/reference_data.parquet"
+
+
 # features
 FEATURE_COLUMNS = ["s2", "s3", "s4", "s7", "s8", "s9", "s11",
                    "s12", "s13", "s14", "s15", "s17", "s20", "s21"]
 
 settings = Settings()
-
-

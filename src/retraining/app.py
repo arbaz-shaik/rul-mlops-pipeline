@@ -4,6 +4,13 @@ On drift, the detector POSTs a thin signal here. This endpoint runs the three
 proven stages in sequence, retrain the challenger, shadow-validate it against
 production, and promote or reject, then returns the decision plus the timestamps
 needed to measure end-to-end deployment latency.
+
+Two paths (P2 ruling):
+  PRODUCTION (experiment=False, default): _fetch_window then _temporal_split,
+  exactly as before. Unchanged.
+  EXPERIMENT (experiment=True): fetch train windows and the pooled eval set from
+  the named scenario via the replay cursor, skipping _temporal_split. Carries the
+  detector's measured drift-detection latency into the response for MLflow.
 """
 from datetime import datetime, timezone
 
@@ -22,32 +29,31 @@ app = FastAPI()
 class RetrainSignal(BaseModel):
     drift_score: float
     triggered_at: str  # ISO timestamp from the detector when drift fired
+    experiment: bool = False
+    scenario_path: str | None = None
+    detection_latency_s: float | None = None
 
 
 def _fetch_window():
-    """Fetch the recent stream window.
-
-    STAND-IN: loads a slice of the prepared arrays. The replay-harness block
-    will replace this function body with a pull from the replay buffer; keeping
-    the fetch isolated here makes that swap a one-function change.
-    """
+    """PRODUCTION stand-in: a slice of the prepared arrays. Unused on the
+    experiment path; retained for the production path and its tests."""
     from pathlib import Path
     processed = Path(settings.processed_data_dir)
     X = np.load(processed / "x_train.npy")
     y = np.load(processed / "y_train.npy")
-    # a recent-ish window large enough that a temporal split leaves >=500 for eval
     return X[-3000:], y[-3000:]
 
 
 def _temporal_split(X, y):
-    """Older portion trains, newer portion evaluates (Fork 2, option b).
+    """Older portion trains, newer portion evaluates. Production path only.
 
     Eval is the newer max(shadow_min_predictions, 30%) rows so the shadow stage
-    clears its N-gate when the window is large enough.
+    clears its N-gate when the window is large enough. Not called on the
+    experiment path (which supplies train and eval as separate pooled objects).
     """
     n = len(X)
     eval_n = max(settings.shadow_min_predictions, int(n * 0.3))
-    eval_n = min(eval_n, n)  # cannot exceed what exists
+    eval_n = min(eval_n, n)
     split = n - eval_n
     X_train, y_train = X[:split], y[:split]
     X_eval, y_eval = X[split:], y[split:]
@@ -56,8 +62,15 @@ def _temporal_split(X, y):
 
 @app.post("/retrain")
 def retrain(signal: RetrainSignal):
-    X, y = _fetch_window()
-    X_train, y_train, X_eval, y_eval = _temporal_split(X, y)
+    if signal.experiment:
+        from pipeline.replay import load_scenario, ReplayCursor
+        scenario = load_scenario(signal.scenario_path)
+        cursor = ReplayCursor(scenario)
+        X_train, y_train = cursor.retrain_train_fetch()
+        X_eval, y_eval = cursor.eval_pool()
+    else:
+        X, y = _fetch_window()
+        X_train, y_train, X_eval, y_eval = _temporal_split(X, y)
 
     version = run_retraining(X_train, y_train, signal.drift_score)
     outcome = validate(version, X_eval, y_eval)
@@ -72,6 +85,7 @@ def retrain(signal: RetrainSignal):
         "eval_rows": int(len(X_eval)),
         "triggered_at": signal.triggered_at,
         "completed_at": completed_at,
+        "detection_latency_s": signal.detection_latency_s,
     }
 
 

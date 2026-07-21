@@ -12,6 +12,7 @@
       - prometheus
     volumes:
       - ./src:/app/src
+      - ./pipeline:/app/pipeline
       - ./data:/app/data
       - ./best_model.pth:/app/best_model.pth
   mlflow:
@@ -58,6 +59,7 @@
       - mlflow
     volumes:
       - ./src:/app/src
+      - ./pipeline:/app/pipeline
       - ./data:/app/data
       - ./best_model.pth:/app/best_model.pth
   drift-detector:
@@ -73,6 +75,7 @@
       - retrainer
     volumes:
       - ./src:/app/src
+      - ./pipeline:/app/pipeline
       - ./data:/app/data
 volumes:
   grafana-data:
