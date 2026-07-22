@@ -1,20 +1,22 @@
 ﻿"""Retrainer service HTTP endpoint: the closed-loop seam.
 
-On drift, the detector POSTs a thin signal here. This endpoint runs the three
-proven stages in sequence, retrain the challenger, shadow-validate it against
-production, and promote or reject, then returns the decision plus the timestamps
-needed to measure end-to-end deployment latency.
+On drift (A) or schedule (B), the detector POSTs a thin signal here. This
+endpoint runs the proven stages, retrain the challenger, shadow-validate against
+production, promote or reject, then returns the decision plus timestamps for
+end-to-end deployment latency.
 
-Two paths (P2 ruling):
-  PRODUCTION (experiment=False, default): _fetch_window then _temporal_split,
-  exactly as before. Unchanged.
-  EXPERIMENT (experiment=True): fetch train windows and the pooled eval set from
-  the named scenario via the replay cursor, skipping _temporal_split. Carries the
-  detector's measured drift-detection latency into the response for MLflow.
+Paths:
+  PRODUCTION (experiment=False, default): _fetch_window then _temporal_split.
+  EXPERIMENT (experiment=True): fetch train windows and pooled eval from the
+  named scenario via replay, skip _temporal_split. Logs a per-fire experiment
+  record tagged with condition (A/B/C) and fire_index so B's metric series is
+  queryable alongside A's single point. Carries the detector's drift-detection
+  latency (null for B).
 """
 from datetime import datetime, timezone
 
 import numpy as np
+import mlflow
 from fastapi import FastAPI
 from pydantic import BaseModel
 
@@ -28,10 +30,12 @@ app = FastAPI()
 
 class RetrainSignal(BaseModel):
     drift_score: float
-    triggered_at: str  # ISO timestamp from the detector when drift fired
+    triggered_at: str  # ISO timestamp from the detector when the fire occurred
     experiment: bool = False
     scenario_path: str | None = None
     detection_latency_s: float | None = None
+    condition: str = "A"
+    fire_index: int = 0
 
 
 def _fetch_window():
@@ -47,17 +51,41 @@ def _fetch_window():
 def _temporal_split(X, y):
     """Older portion trains, newer portion evaluates. Production path only.
 
-    Eval is the newer max(shadow_min_predictions, 30%) rows so the shadow stage
-    clears its N-gate when the window is large enough. Not called on the
+    Eval is the newer max(shadow_min_predictions, 30%) rows. Not called on the
     experiment path (which supplies train and eval as separate pooled objects).
     """
     n = len(X)
     eval_n = max(settings.shadow_min_predictions, int(n * 0.3))
     eval_n = min(eval_n, n)
     split = n - eval_n
-    X_train, y_train = X[:split], y[:split]
-    X_eval, y_eval = X[split:], y[split:]
-    return X_train, y_train, X_eval, y_eval
+    return X[:split], y[:split], X[split:], y[split:]
+
+
+def _log_experiment_record(signal, result, eval_rows):
+    """Per-fire experiment record: one MLflow run tagged with condition and
+    fire_index, holding the five-metric-relevant values in hand at the seam.
+    Gives B's per-fire series (and A's single point) a queryable label without
+    touching the promoter or trainer signatures.
+    """
+    mlflow.set_tracking_uri(settings.mlflow_tracking_uri)
+    mlflow.set_experiment(settings.mlflow_experiment_name)
+    with mlflow.start_run(run_name=f"exp-{signal.condition}-fire{signal.fire_index}"):
+        mlflow.set_tags({
+            "event": "experiment_fire",
+            "condition": signal.condition,
+            "fire_index": str(signal.fire_index),
+            "decision": result["decision"],
+            "status": result["status"],
+        })
+        mlflow.log_param("challenger_version", result["version"])
+        mlflow.log_param("eval_rows", eval_rows)
+        if signal.detection_latency_s is not None:
+            mlflow.log_metric("detection_latency_s", signal.detection_latency_s)
+        if result.get("ci"):
+            lower, upper, point = result["ci"]
+            mlflow.log_metric("ci_lower", lower)
+            mlflow.log_metric("ci_upper", upper)
+            mlflow.log_metric("ci_point", point)
 
 
 @app.post("/retrain")
@@ -77,7 +105,7 @@ def retrain(signal: RetrainSignal):
     decision = promote_or_reject(outcome)
 
     completed_at = datetime.now(timezone.utc).isoformat()
-    return {
+    result = {
         "decision": decision,
         "version": version,
         "ci": outcome.get("ci"),
@@ -86,7 +114,14 @@ def retrain(signal: RetrainSignal):
         "triggered_at": signal.triggered_at,
         "completed_at": completed_at,
         "detection_latency_s": signal.detection_latency_s,
+        "condition": signal.condition,
+        "fire_index": signal.fire_index,
     }
+
+    if signal.experiment:
+        _log_experiment_record(signal, result, int(len(X_eval)))
+
+    return result
 
 
 @app.get("/health")

@@ -29,6 +29,7 @@ class Settings(BaseSettings):
     drift_batch_size: int = 500          # rows per detection batch; clean reads ~0.1 stably
     drift_batch_interval_s: float = 5.0  # seconds between batches; latency = n_batches * this
     drift_medium_k: float = 0.375        # s9 offset multiplier, medium intensity, PSI ~0.5
+    drift_cron_k: int = 3                # ablation B: fire every K batches (straddles onset=5)
 
     # retraining
     retraining_blend_ratio: float = 0.3
