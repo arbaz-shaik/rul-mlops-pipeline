@@ -27,8 +27,7 @@ def train_model(X, y, settings):
     weights in memory (not via disk) so the returned model is the best epoch,
     not the last.
     """
-    # Defensive, idempotent RUL cap. The window arrives already capped
-    # (Fork 1), and the baseline arrays are raw; capping twice is a no-op.
+    # Defensive, idempotent RUL cap.
     y = np.minimum(y, settings.rul_cap)
 
     X_tr, X_val, y_tr, y_val = train_test_split(
@@ -93,14 +92,14 @@ def train_model(X, y, settings):
 
         if val_rmse < best_rmse:
             best_rmse = val_rmse
-            best_state = copy.deepcopy(model.state_dict())  # in memory, not disk
+            best_state = copy.deepcopy(model.state_dict())
             patience_counter = 0
         else:
             patience_counter += 1
         if patience_counter >= settings.early_stopping_patience:
             break
 
-    model.load_state_dict(best_state)  # restore best epoch
+    model.load_state_dict(best_state)
     return model, best_rmse, history
 
 
@@ -139,7 +138,9 @@ def run_retraining(X_window, y_window, drift_score):
 
     mlflow.set_experiment(settings.mlflow_experiment_name)
     start = time.time()
-    X, y, ood_proportion, blend_applied = apply_blend_gate(X_window, y_window, settings)
+    X, y, ood_proportion, blend_applied = apply_blend_gate(
+        X_window, y_window, settings, drift_score
+    )
 
     model, best_rmse, _ = train_model(X, y, settings)
     duration = time.time() - start
@@ -156,20 +157,19 @@ def run_retraining(X_window, y_window, drift_score):
             "rul_cap": settings.rul_cap,
             "drift_score": drift_score,
             "window_rows": int(X_window.shape[0]),
+            "blended_rows": int(X.shape[0]),
             "window_shape": str(X_window.shape),
             "training_duration_s": round(duration, 2),
-
             "ood_proportion": round(ood_proportion, 4),
-
             "blend_applied": blend_applied,
         },
         metrics={"best_val_rmse": best_rmse},
     )
     version = info.registered_model_version if hasattr(info, "registered_model_version") else None
-    print(f"retrained version {version}, best_val_rmse {best_rmse:.4f}, drift {drift_score}")
+    print(f"retrained version {version}, best_val_rmse {best_rmse:.4f}, "
+          f"drift {drift_score}, blend {blend_applied}, rows {X_window.shape[0]}->{X.shape[0]}")
     return version
 
 
 if __name__ == "__main__":
     train_baseline()
-

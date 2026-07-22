@@ -1,25 +1,24 @@
-﻿"""Replay harness: build one drift scenario, serve TWO separable objects.
+﻿"""Replay harness: build one drift scenario, serve separable objects.
 
-Per the final ruling, detection and evaluation are distinct objects:
+Detection, challenger-training, and shadow-evaluation are distinct, and the
+training and eval pools are ENGINE-DISJOINT to prevent train/test leakage:
 
-  DETECTION STREAM: a sequence of multi-engine distributional batches. The first
-  n_clean batches are representative draws across engines with no injection; the
-  next n_drift batches are representative draws with the s9 offset applied. Drift
-  onset is a batch boundary (onset_batch = n_clean); no batch straddles onset.
-  A clean multi-engine batch reads PSI ~0.1 against the pooled reference; a
-  drifted batch at k reads in-band. Single-engine batches were rejected: one
-  engine occupies a narrow band of the pooled manifold and reads ~3.3 clean.
+  DETECTION STREAM: multi-engine distributional batches, clean then drifted,
+  onset on a batch boundary. Clean batch reads PSI ~0.1, drifted ~0.5.
 
-  EVAL POOL: 500+ per-engine stride-1 windows, each wholly inside one engine
-  (zero cross-engine straddle), drawn from post-onset engine tails so each window
-  carries drift. Pooled to clear shadow_min_predictions.
+  DRIFTED TRAINING POOL: post-onset drifted windows from the TRAINING engine
+  subset (the 95 smaller-yield engines). The challenger trains on these, so it
+  adapts to the drift (restores the 15 July retrain-on-drift design). Drifted
+  input raises OOD, firing the existing blend gate for size.
 
-  RETRAIN-TRAIN FETCH: the challenger trains on pre-onset (clean) windows.
+  DRIFTED EVAL POOL: post-onset drifted windows from the EVAL engine subset (the
+  5 largest-yield engines, >=500 windows). The shadow stage validates on these.
 
-Features come only from scaled x_train (via labels.reconstruct_per_row scaler
-transform, gate-verified bit-identical). Raw is read solely for labels. Served/
-evaluated labels are capped (B'); uncapped stored for the on-manifold proof.
-Latency is quantised to the batch interval: (crossing_batch - onset) * interval.
+  Engine-disjoint by construction: no engine contributes to both training and
+  eval, so the shadow comparison is leak-free and its numbers are meaningful.
+
+Features from scaled x_train (gate-verified). Raw read solely for labels. Served
+labels capped (B'). Latency quantised to batch interval.
 """
 import os
 from pathlib import Path
@@ -36,14 +35,11 @@ _WIN = settings.window_size
 _BATCH = settings.drift_batch_size
 N_CLEAN = 5
 N_DRIFT = 10
+_EVAL_ENGINE_COUNT = 5  # largest-yield engines reserved for eval (679 windows, clears 500+margin)
 
 
 def _window_stream(rows, row_rul):
-    """(R,14)+(R,) -> ((R-_WIN+1,_WIN,14),(R-_WIN+1,)). Contiguous, stride 1.
-
-    Label = terminal-row RUL, matching create_windowed_features. Injection is
-    applied to rows BEFORE this call.
-    """
+    """(R,14)+(R,) -> ((R-_WIN+1,_WIN,14),(R-_WIN+1,)). Contiguous, stride 1."""
     n = rows.shape[0] - _WIN + 1
     if n <= 0:
         raise ValueError(f"run too short: {rows.shape[0]} < window {_WIN}")
@@ -53,7 +49,7 @@ def _window_stream(rows, row_rul):
 
 
 def _load_engines():
-    """reconstruct_per_row grouped into per-engine (feats, uncapped_rul) in order."""
+    """reconstruct_per_row grouped into per-engine (id, feats, uncapped_rul)."""
     units, feats, rul = reconstruct_per_row()
     engines = []
     for u in pd.unique(units):
@@ -62,19 +58,27 @@ def _load_engines():
     return engines
 
 
-# Detection stream: sequence of multi-engine batches, clean then drifted.
-def _build_detection_batches(all_feats, drift_type, k, sigma, seed):
-    """Return (batches list of (_BATCH,14) arrays, onset_batch).
+def _post_onset_window_yield(feats):
+    d = len(feats) // 2
+    tail = len(feats) - d
+    return max(0, tail - _WIN + 1)
 
-    First N_CLEAN batches are clean multi-engine draws; next N_DRIFT batches are
-    multi-engine draws with s9 offset applied across the whole batch. Each batch
-    seeded from seed + its index so the sequence is deterministic and every batch
-    is an independent representative draw. Onset is a boundary (= N_CLEAN); no
-    batch straddles.
+
+def _partition_engines(engines):
+    """Largest-yield _EVAL_ENGINE_COUNT engines -> eval subset; rest -> train.
+
+    Returns (eval_engines, train_engines), disjoint by construction.
     """
+    ordered = sorted(engines, key=lambda e: _post_onset_window_yield(e[1]), reverse=True)
+    eval_engines = ordered[:_EVAL_ENGINE_COUNT]
+    train_engines = ordered[_EVAL_ENGINE_COUNT:]
+    return eval_engines, train_engines
+
+
+def _build_detection_batches(all_feats, drift_type, k, sigma, seed):
+    """N_CLEAN clean multi-engine batches then N_DRIFT drifted. Onset = N_CLEAN."""
     batches = []
-    total = N_CLEAN + N_DRIFT
-    for b in range(total):
+    for b in range(N_CLEAN + N_DRIFT):
         rng = np.random.default_rng(seed + b)
         idx = rng.choice(all_feats.shape[0], size=_BATCH, replace=False)
         batch = all_feats[idx]
@@ -84,93 +88,69 @@ def _build_detection_batches(all_feats, drift_type, k, sigma, seed):
     return batches, N_CLEAN
 
 
-# Eval pool: per-engine drifted-tail windows, pooled >=500, zero straddle.
-def _build_eval_pool(engines, drift_type, k, sigma, seed, target):
-    """Pool single-engine stride-1 windows from post-onset drifted tails.
+def _pool_drifted_windows(engine_subset, drift_type, k, sigma, seed, target):
+    """Pool post-onset drifted stride-1 windows from a subset, until >= target.
 
-    Each window comes wholly from one engine's post-onset tail (zero cross-engine
-    straddle). Collect until >= target windows.
+    Each window wholly within one engine's post-onset tail (zero straddle).
+    Returns (X, y, provenance, engine_ids_used).
     """
-    Xs, ys, provenance = [], [], []
-    order = list(range(len(engines)))
-    rng = np.random.default_rng(seed + 1)
+    Xs, ys, prov = [], [], []
+    order = list(range(len(engine_subset)))
+    rng = np.random.default_rng(seed)
     rng.shuffle(order)
-
+    used = []
     for ei in order:
-        u, feats, rul = engines[ei]
-        run_len = len(feats)
-        d = run_len // 2
+        u, feats, rul = engine_subset[ei]
+        d = len(feats) // 2
         tail_feats = feats[d:]
         tail_rul = rul[d:]
         if tail_feats.shape[0] < _WIN:
             continue
-        drifted_tail = inject(tail_feats, drift_type, k, 0, sigma, seed=seed, s9_index=S9_INDEX)
-        Xw, yw = _window_stream(drifted_tail, derive_served_labels(tail_rul))
+        drifted = inject(tail_feats, drift_type, k, 0, sigma, seed=seed, s9_index=S9_INDEX)
+        Xw, yw = _window_stream(drifted, derive_served_labels(tail_rul))
         Xs.append(Xw)
         ys.append(yw)
-        provenance.extend([u] * len(yw))
+        prov.extend([u] * len(yw))
+        used.append(u)
         if sum(len(a) for a in ys) >= target:
             break
-
     if not Xs:
         raise ValueError("no engine tail long enough to window")
     X = np.concatenate(Xs, axis=0)
     y = np.concatenate(ys, axis=0)
-    prov = np.array(provenance, dtype=np.int64)
     if len(y) < target:
-        raise ValueError(f"pooled only {len(y)} eval windows, need {target}")
-    return X, y, prov
-
-
-def _build_train_fetch(all_feats, all_rul, seed, target):
-    """Clean multi-engine windows the challenger trains on (pre-onset regime).
-
-    Draws a contiguous-per-engine set is unnecessary here; the challenger trains
-    on clean windows, so pool clean per-engine windows the same way as eval but
-    WITHOUT injection, from pre-onset (early) engine portions.
-    """
-    engines = _load_engines()
-    Xs, ys = [], []
-    rng = np.random.default_rng(seed + 2)
-    order = list(range(len(engines)))
-    rng.shuffle(order)
-    for ei in order:
-        u, feats, rul = engines[ei]
-        d = len(feats) // 2
-        head_feats = feats[:d]          # pre-onset (clean) portion
-        head_rul = rul[:d]
-        if head_feats.shape[0] < _WIN:
-            continue
-        Xw, yw = _window_stream(head_feats, derive_served_labels(head_rul))
-        Xs.append(Xw)
-        ys.append(yw)
-        if sum(len(a) for a in ys) >= target:
-            break
-    X = np.concatenate(Xs, axis=0)
-    y = np.concatenate(ys, axis=0)
-    return X, y
+        raise ValueError(f"pooled only {len(y)} windows, need {target}")
+    return X, y, np.array(prov, dtype=np.int64), used
 
 
 def build_scenario(drift_type, intensity, k, seed):
-    """Build detection batches + eval pool + train fetch + metadata. Does not save."""
+    """Build detection batches + disjoint drifted train/eval pools + metadata."""
     engines = _load_engines()
     units, all_feats, all_rul = reconstruct_per_row()
     sigma = compute_sigma_s9(all_feats)
 
     batches, onset = _build_detection_batches(all_feats, drift_type, k, sigma, seed)
-    target = settings.shadow_min_predictions
-    eval_X, eval_y, eval_prov = _build_eval_pool(engines, drift_type, k, sigma, seed, target)
-    train_X, train_y = _build_train_fetch(all_feats, all_rul, seed, target)
 
-    # batches stored as one stacked array (n_batches, _BATCH, 14) for the .npz
-    det_batches = np.stack(batches)
+    eval_engines, train_engines = _partition_engines(engines)
+
+    eval_target = settings.shadow_min_predictions
+    eval_X, eval_y, eval_prov, eval_ids = _pool_drifted_windows(
+        eval_engines, drift_type, k, sigma, seed + 1, eval_target)
+
+    train_target = 2 * settings.shadow_min_predictions  # bounded; larger than eval, blend adds more
+    train_X, train_y, train_prov, train_ids = _pool_drifted_windows(
+        train_engines, drift_type, k, sigma, seed + 2, train_target)
+
+    # HARD REQUIREMENT: engine-disjoint train vs eval (leak-free shadow comparison)
+    overlap = set(eval_ids) & set(train_ids)
+    assert not overlap, f"LEAK: engines in both train and eval: {overlap}"
 
     return {
         "drift_type": drift_type,
         "k": float(k),
         "seed": int(seed),
         "sigma_s9": float(sigma),
-        "det_batches": det_batches,
+        "det_batches": np.stack(batches),
         "onset_batch": int(onset),
         "batch_size": int(_BATCH),
         "batch_interval_s": float(settings.drift_batch_interval_s),
@@ -178,8 +158,12 @@ def build_scenario(drift_type, intensity, k, seed):
         "eval_y": eval_y,
         "eval_provenance": eval_prov,
         "eval_n": int(len(eval_y)),
+        "eval_engines": np.array(sorted(eval_ids), dtype=np.int64),
         "train_X": train_X,
         "train_y": train_y,
+        "train_provenance": train_prov,
+        "train_n": int(len(train_y)),
+        "train_engines": np.array(sorted(train_ids), dtype=np.int64),
     }
 
 
@@ -200,7 +184,10 @@ def save_scenario(scenario, intensity):
         batch_size=scenario["batch_size"], batch_interval_s=scenario["batch_interval_s"],
         eval_X=scenario["eval_X"], eval_y=scenario["eval_y"],
         eval_provenance=scenario["eval_provenance"], eval_n=scenario["eval_n"],
+        eval_engines=scenario["eval_engines"],
         train_X=scenario["train_X"], train_y=scenario["train_y"],
+        train_provenance=scenario["train_provenance"], train_n=scenario["train_n"],
+        train_engines=scenario["train_engines"],
     )
     written = tmp if tmp.exists() else tmp.with_name(tmp.name + ".npz")
     os.replace(written, path)
@@ -217,12 +204,15 @@ def load_scenario(path):
         "batch_size": int(d["batch_size"]), "batch_interval_s": float(d["batch_interval_s"]),
         "eval_X": d["eval_X"], "eval_y": d["eval_y"],
         "eval_provenance": d["eval_provenance"], "eval_n": int(d["eval_n"]),
+        "eval_engines": d["eval_engines"],
         "train_X": d["train_X"], "train_y": d["train_y"],
+        "train_provenance": d["train_provenance"], "train_n": int(d["train_n"]),
+        "train_engines": d["train_engines"],
     }
 
 
 class ReplayCursor:
-    """Serves detection batches, train fetch, and eval pool from one scenario."""
+    """Serves detection batches, drifted train pool, and drifted eval pool."""
 
     def __init__(self, scenario):
         self.s = scenario
@@ -234,13 +224,14 @@ class ReplayCursor:
         return self.s["onset_batch"]
 
     def detector_batch(self, i):
-        """Batch i as DataFrame[FEATURE_COLUMNS] for compute_drift."""
         return pd.DataFrame(self.s["det_batches"][i], columns=FEATURE_COLUMNS)
 
     def retrain_train_fetch(self):
-        """(X,y) clean pre-onset windows the challenger trains on."""
+        """(X,y) DRIFTED training windows from the training engine subset.
+        Disjoint from the eval pool by engine, so the shadow comparison is
+        leak-free. Drifted input fires the blend gate in run_retraining."""
         return self.s["train_X"], self.s["train_y"]
 
     def eval_pool(self):
-        """(eval_X (n,_WIN,14), eval_y (n,)) pooled drifted single-engine windows."""
+        """(X,y) DRIFTED eval windows from the eval engine subset (>=500)."""
         return self.s["eval_X"], self.s["eval_y"]
