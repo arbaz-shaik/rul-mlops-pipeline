@@ -1,0 +1,13 @@
+{
+  "n_requests": 1000,
+  "concurrency": 10,
+  "served_model": "RULModel@production",
+  "p50_ms": 160.68,
+  "p95_ms": 282.57,
+  "p99_ms": 3754.57,
+  "mean_ms": 203.67,
+  "min_ms": 37.2,
+  "max_ms": 3922.62,
+  "throughput_rps": 48.6,
+  "wall_time_s": 20.56
+}
