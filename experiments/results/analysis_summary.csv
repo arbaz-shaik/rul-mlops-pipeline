@@ -1,0 +1,4 @@
+condition,n_fires,false_promotion_rate,correct_decision_rate,accuracy_retention_mean,accuracy_retention_lower,accuracy_retention_upper,deployment_latency_mean
+A,5,0.0,1.0,-31.151,-31.201,-31.1,187.9
+B,20,0.0,1.0,-32.804,-34.195,-31.744,115.3
+C,5,1.0,0.0,-31.197,-31.253,-31.14,74.0

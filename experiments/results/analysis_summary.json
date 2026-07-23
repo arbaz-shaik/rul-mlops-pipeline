@@ -1,0 +1,88 @@
+{
+  "A": {
+    "n_fires": 5,
+    "n_promotions": 0,
+    "n_false_promotions": 0,
+    "false_promotion_rate": {
+      "lower": 0.0,
+      "point": 0.0,
+      "upper": 0.0
+    },
+    "correct_decision_rate": {
+      "lower": 0.5655085052479191,
+      "point": 1.0,
+      "upper": 1.0
+    },
+    "accuracy_retention_ci_point": {
+      "lower": -31.201086586855233,
+      "mean": -31.15066329058495,
+      "upper": -31.10023999431467
+    },
+    "deployment_latency_s": {
+      "lower": 121.07198797000005,
+      "mean": 187.8545582,
+      "upper": 265.8165898
+    },
+    "detection_latency_s": {
+      "lower": 0.0,
+      "mean": 0.0,
+      "upper": 0.0
+    }
+  },
+  "B": {
+    "n_fires": 20,
+    "n_promotions": 0,
+    "n_false_promotions": 0,
+    "false_promotion_rate": {
+      "lower": 0.0,
+      "point": 0.0,
+      "upper": 0.0
+    },
+    "correct_decision_rate": {
+      "lower": 0.8388698745050667,
+      "point": 1.0,
+      "upper": 1.0
+    },
+    "accuracy_retention_ci_point": {
+      "lower": -34.195298399588864,
+      "mean": -32.804271105325384,
+      "upper": -31.74392399629884
+    },
+    "deployment_latency_s": {
+      "lower": 87.6581549175,
+      "mean": 115.27583915,
+      "upper": 144.13072423625
+    },
+    "detection_latency_s": "N/A (no drift trigger)"
+  },
+  "C": {
+    "n_fires": 5,
+    "n_promotions": 5,
+    "n_false_promotions": 5,
+    "false_promotion_rate": {
+      "lower": 0.5655085052479191,
+      "point": 1.0,
+      "upper": 1.0
+    },
+    "correct_decision_rate": {
+      "lower": 0.0,
+      "point": 0.0,
+      "upper": 0.43449149475208104
+    },
+    "accuracy_retention_ci_point": {
+      "lower": -31.25334918661856,
+      "mean": -31.196888306261105,
+      "upper": -31.140427425903646
+    },
+    "deployment_latency_s": {
+      "lower": 63.215650000000004,
+      "mean": 74.02920320000001,
+      "upper": 81.94737359999999
+    },
+    "detection_latency_s": {
+      "lower": 0.0,
+      "mean": 0.0,
+      "upper": 0.0
+    }
+  }
+}
