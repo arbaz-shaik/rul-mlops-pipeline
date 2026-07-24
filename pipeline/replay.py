@@ -75,8 +75,48 @@ def _partition_engines(engines):
     return eval_engines, train_engines
 
 
+# Recurring schedule over 15 batches: clean, drift, clean, drift (2 onsets).
+_RECUR_SCHEDULE = [("clean", 3), ("drift", 4), ("clean", 3), ("drift", 5)]
+
+
+def _recur_drift_batches():
+    """Drifted batch indices under _RECUR_SCHEDULE, plus onset and clear batches."""
+    drift_idx, onsets, clears = set(), [], []
+    b = 0
+    prev = None
+    for phase, n in _RECUR_SCHEDULE:
+        if phase == "drift":
+            onsets.append(b)
+            for j in range(b, b + n):
+                drift_idx.add(j)
+        elif phase == "clean" and prev == "drift":
+            clears.append(b)
+        prev = phase
+        b += n
+    return drift_idx, onsets, clears
+
+
 def _build_detection_batches(all_feats, drift_type, k, sigma, seed):
-    """N_CLEAN clean multi-engine batches then N_DRIFT drifted. Onset = N_CLEAN."""
+    """Clean/drifted multi-engine detection batches.
+
+    sudden:    N_CLEAN clean then N_DRIFT drifted at full k. Onset = N_CLEAN.
+    gradual:   drifted batch b at k*(b-N_CLEAN+1)/N_DRIFT (ramp). Onset = N_CLEAN.
+    recurring: clean/drift/clean/drift per _RECUR_SCHEDULE (2 onsets), each drift
+               phase full k. Onset (singular) = first drift-phase start.
+    """
+    if drift_type == "recurring":
+        drift_idx, onsets, _ = _recur_drift_batches()
+        total = sum(n for _, n in _RECUR_SCHEDULE)
+        batches = []
+        for b in range(total):
+            rng = np.random.default_rng(seed + b)
+            idx = rng.choice(all_feats.shape[0], size=_BATCH, replace=False)
+            batch = all_feats[idx]
+            if b in drift_idx:
+                batch = inject(batch, "recurring", k, 0, sigma, seed=seed + b, s9_index=S9_INDEX)
+            batches.append(batch)
+        return batches, onsets[0]
+
     batches = []
     for b in range(N_CLEAN + N_DRIFT):
         rng = np.random.default_rng(seed + b)
@@ -84,9 +124,11 @@ def _build_detection_batches(all_feats, drift_type, k, sigma, seed):
         batch = all_feats[idx]
         if b >= N_CLEAN and drift_type == "sudden":
             batch = inject(batch, "sudden", k, 0, sigma, seed=seed + b, s9_index=S9_INDEX)
+        elif b >= N_CLEAN and drift_type == "gradual":
+            frac = (b - N_CLEAN + 1) / N_DRIFT
+            batch = inject(batch, "gradual", k * frac, 0, sigma, seed=seed + b, s9_index=S9_INDEX)
         batches.append(batch)
     return batches, N_CLEAN
-
 
 def _pool_drifted_windows(engine_subset, drift_type, k, sigma, seed, target):
     """Pool post-onset drifted stride-1 windows from a subset, until >= target.
@@ -145,11 +187,22 @@ def build_scenario(drift_type, intensity, k, seed):
     overlap = set(eval_ids) & set(train_ids)
     assert not overlap, f"LEAK: engines in both train and eval: {overlap}"
 
+    ramp_n_drift = N_DRIFT if drift_type == "gradual" else 0
+    ramp_slope = (float(k) / N_DRIFT) if drift_type == "gradual" else 0.0
+    if drift_type == "recurring":
+        _, _recur_onsets, _recur_clears = _recur_drift_batches()
+    else:
+        _recur_onsets, _recur_clears = [onset], []
     return {
+        "recur_onsets": np.array(_recur_onsets, dtype=np.int64),
+        "recur_clears": np.array(_recur_clears, dtype=np.int64),
+        "recur_cycles": int(len(_recur_onsets)),
         "drift_type": drift_type,
         "k": float(k),
         "seed": int(seed),
         "sigma_s9": float(sigma),
+        "ramp_n_drift": int(ramp_n_drift),
+        "ramp_slope": float(ramp_slope),
         "det_batches": np.stack(batches),
         "onset_batch": int(onset),
         "batch_size": int(_BATCH),
@@ -180,6 +233,9 @@ def save_scenario(scenario, intensity):
         tmp,
         drift_type=scenario["drift_type"], k=scenario["k"], seed=scenario["seed"],
         sigma_s9=scenario["sigma_s9"],
+        ramp_n_drift=scenario["ramp_n_drift"], ramp_slope=scenario["ramp_slope"],
+        recur_onsets=scenario["recur_onsets"], recur_clears=scenario["recur_clears"],
+        recur_cycles=scenario["recur_cycles"],
         det_batches=scenario["det_batches"], onset_batch=scenario["onset_batch"],
         batch_size=scenario["batch_size"], batch_interval_s=scenario["batch_interval_s"],
         eval_X=scenario["eval_X"], eval_y=scenario["eval_y"],
@@ -200,6 +256,11 @@ def load_scenario(path):
     return {
         "drift_type": str(d["drift_type"]), "k": float(d["k"]), "seed": int(d["seed"]),
         "sigma_s9": float(d["sigma_s9"]),
+        "ramp_n_drift": int(d["ramp_n_drift"]) if "ramp_n_drift" in d else 0,
+        "ramp_slope": float(d["ramp_slope"]) if "ramp_slope" in d else 0.0,
+        "recur_onsets": d["recur_onsets"] if "recur_onsets" in d else np.array([], dtype=np.int64),
+        "recur_clears": d["recur_clears"] if "recur_clears" in d else np.array([], dtype=np.int64),
+        "recur_cycles": int(d["recur_cycles"]) if "recur_cycles" in d else 1,
         "det_batches": d["det_batches"], "onset_batch": int(d["onset_batch"]),
         "batch_size": int(d["batch_size"]), "batch_interval_s": float(d["batch_interval_s"]),
         "eval_X": d["eval_X"], "eval_y": d["eval_y"],

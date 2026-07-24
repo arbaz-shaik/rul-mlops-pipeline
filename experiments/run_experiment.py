@@ -1,5 +1,6 @@
 ﻿"""Matrix experiment runner: 3 conditions x 5 repeats on sudden-medium."""
 import json
+import os as _os
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -10,12 +11,14 @@ from mlflow import MlflowClient
 
 from src.config import settings
 from src.drift.detector import compute_drift
-from src.drift.trigger import check_drift
+from src.drift.trigger import check_drift, find_rising_crossings
 from pipeline.replay import build_scenario, save_scenario, load_scenario, ReplayCursor
 
 RETRAIN_URL = "http://localhost:8001/retrain"
-SCENARIO_HOST_PATH = "data/drift_scenarios/sudden_medium_seed0.npz"
-SCENARIO_CONTAINER_PATH = "/app/data/drift_scenarios/sudden_medium_seed0.npz"
+_SCENARIO_NAME = _os.environ.get("SCENARIO_NAME", "sudden_medium_seed0")
+SCENARIO_HOST_PATH = f"data/drift_scenarios/{_SCENARIO_NAME}.npz"
+SCENARIO_CONTAINER_PATH = f"/app/data/drift_scenarios/{_SCENARIO_NAME}.npz"
+_DRIFT_LABEL = _SCENARIO_NAME.split("_")[0]
 CONDITIONS = ["A", "B", "C"]
 REPEATS = 5
 SCENARIO_SEED = 0
@@ -50,6 +53,29 @@ def _find_crossing(cursor):
             latency = max(0, i - onset) * cursor.s["batch_interval_s"]
             return i, float(aggregate), latency
     return None, None, None
+
+
+def _all_crossings(cursor):
+    """All edge-triggered rising crossings over the batch sequence. Returns
+    [(batch, agg, latency), ...]. Single-onset scenarios yield one crossing
+    (regression-safe); recurring yields one per onset. Latency is measured from
+    the nearest preceding onset (recur_onsets for recurring, else onset_batch)."""
+    psi = []
+    for i in range(cursor.n_batches()):
+        _, aggregate = compute_drift(cursor.detector_batch(i))
+        psi.append(float(aggregate))
+    cross_idx = find_rising_crossings(psi)
+    onsets = list(cursor.s.get("recur_onsets", []))
+    if not len(onsets):
+        onsets = [cursor.onset_batch()]
+    interval = cursor.s["batch_interval_s"]
+    out = []
+    for ci in cross_idx:
+        preceding = [o for o in onsets if o <= ci]
+        base = max(preceding) if preceding else onsets[0]
+        latency = max(0, ci - base) * interval
+        out.append((ci, psi[ci], latency))
+    return out
 
 
 def _post(condition, fire_index, drift_score, detection_latency_s):
@@ -91,17 +117,21 @@ def _extract(resp):
 
 
 def _run_A(cursor, repeat):
-    crossing, agg, latency = _find_crossing(cursor)
-    resp = _post("A", 0, agg, latency)
-    return [{"repeat": repeat, "condition": "A", "fire_index": 0,
-             "crossing_batch": crossing, **_extract(resp)}]
+    rows = []
+    for fi, (crossing, agg, latency) in enumerate(_all_crossings(cursor)):
+        resp = _post("A", fi, agg, latency)
+        rows.append({"repeat": repeat, "condition": "A", "fire_index": fi,
+                     "crossing_batch": crossing, **_extract(resp)})
+    return rows
 
 
 def _run_C(cursor, repeat):
-    crossing, agg, latency = _find_crossing(cursor)
-    resp = _post("C", 0, agg, latency)
-    return [{"repeat": repeat, "condition": "C", "fire_index": 0,
-             "crossing_batch": crossing, **_extract(resp)}]
+    rows = []
+    for fi, (crossing, agg, latency) in enumerate(_all_crossings(cursor)):
+        resp = _post("C", fi, agg, latency)
+        rows.append({"repeat": repeat, "condition": "C", "fire_index": fi,
+                     "crossing_batch": crossing, **_extract(resp)})
+    return rows
 
 
 def _run_B(cursor, repeat):
@@ -141,7 +171,7 @@ def run_matrix():
             print(f"[{condition} repeat {repeat}] {len(rows)} fire(s), {round(dur,1)}s, "
                   f"decisions={[r['decision'] for r in rows]}")
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    out = RESULTS_DIR / f"matrix_sudden_medium_{stamp}.json"
+    out = RESULTS_DIR / f"matrix_{_DRIFT_LABEL}_medium_{stamp}.json"
     out.write_text(json.dumps(all_rows, indent=2))
     _reset_alias(baseline)
     print(f"\nwrote {out} ({len(all_rows)} rows). alias reset -> v{baseline}")

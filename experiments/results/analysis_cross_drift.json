@@ -1,0 +1,225 @@
+{
+  "sudden": {
+    "drift_type": "sudden",
+    "file": "experiments\\results\\matrix_sudden_medium_20260722T231525Z.json",
+    "n_rows": 30,
+    "A": {
+      "n_fires": 5,
+      "n_promotions": 0,
+      "n_false": 0,
+      "false_promotion_rate_per_decision": {
+        "lower": 0.0,
+        "point": 0.0,
+        "upper": 0.0
+      },
+      "accuracy_retention_fire0_vs_v1": {
+        "lower": -31.201086586855233,
+        "mean": -31.15066329058495,
+        "upper": -31.10023999431467
+      },
+      "deployment_latency_s": {
+        "lower": 121.07198797000005,
+        "mean": 187.8545582,
+        "upper": 265.8165898
+      },
+      "detection_latency_s": {
+        "mean": 0.0
+      }
+    },
+    "B": {
+      "n_fires": 20,
+      "n_promotions": 0,
+      "n_false": 0,
+      "false_promotion_rate_per_decision": {
+        "lower": 0.0,
+        "point": 0.0,
+        "upper": 0.0
+      },
+      "accuracy_retention_fire0_vs_v1": {
+        "lower": -38.037788727836016,
+        "mean": -37.99722839923542,
+        "upper": -37.941962382849304
+      },
+      "deployment_latency_s": {
+        "lower": 87.6581549175,
+        "mean": 115.27583915,
+        "upper": 144.13072423625
+      },
+      "detection_latency_s": "N/A"
+    },
+    "C": {
+      "n_fires": 5,
+      "n_promotions": 5,
+      "n_false": 5,
+      "false_promotion_rate_per_decision": {
+        "lower": 0.5655085052479191,
+        "point": 1.0,
+        "upper": 1.0
+      },
+      "accuracy_retention_fire0_vs_v1": {
+        "lower": -31.25334918661856,
+        "mean": -31.196888306261105,
+        "upper": -31.140427425903646
+      },
+      "deployment_latency_s": {
+        "lower": 63.215650000000004,
+        "mean": 74.02920320000001,
+        "upper": 81.94737359999999
+      },
+      "detection_latency_s": {
+        "mean": 0.0
+      }
+    }
+  },
+  "gradual": {
+    "drift_type": "gradual",
+    "file": "experiments\\results\\matrix_gradual_medium_20260723T015039Z.json",
+    "n_rows": 30,
+    "A": {
+      "n_fires": 5,
+      "n_promotions": 0,
+      "n_false": 0,
+      "false_promotion_rate_per_decision": {
+        "lower": 0.0,
+        "point": 0.0,
+        "upper": 0.0
+      },
+      "accuracy_retention_fire0_vs_v1": {
+        "lower": -31.385740335649587,
+        "mean": -31.2247276981335,
+        "upper": -31.108307619566602
+      },
+      "deployment_latency_s": {
+        "lower": 38.7188086,
+        "mean": 51.1262728,
+        "upper": 65.30949100000001
+      },
+      "detection_latency_s": {
+        "mean": 30.0
+      }
+    },
+    "B": {
+      "n_fires": 20,
+      "n_promotions": 0,
+      "n_false": 0,
+      "false_promotion_rate_per_decision": {
+        "lower": 0.0,
+        "point": 0.0,
+        "upper": 0.0
+      },
+      "accuracy_retention_fire0_vs_v1": {
+        "lower": -38.31407893215125,
+        "mean": -38.18075517785076,
+        "upper": -38.097007195781984
+      },
+      "deployment_latency_s": {
+        "lower": 52.092206375,
+        "mean": 69.76013400000002,
+        "upper": 90.99049931500001
+      },
+      "detection_latency_s": "N/A"
+    },
+    "C": {
+      "n_fires": 5,
+      "n_promotions": 5,
+      "n_false": 5,
+      "false_promotion_rate_per_decision": {
+        "lower": 0.5655085052479191,
+        "point": 1.0,
+        "upper": 1.0
+      },
+      "accuracy_retention_fire0_vs_v1": {
+        "lower": -31.18653223671668,
+        "mean": -31.11890300804721,
+        "upper": -31.051525800260084
+      },
+      "deployment_latency_s": {
+        "lower": 72.27445353500002,
+        "mean": 132.540583,
+        "upper": 192.7796776
+      },
+      "detection_latency_s": {
+        "mean": 30.0
+      }
+    }
+  },
+  "recurring": {
+    "drift_type": "recurring",
+    "file": "experiments\\results\\matrix_recurring_medium_20260724T003324Z.json",
+    "n_rows": 40,
+    "A": {
+      "n_fires": 10,
+      "n_promotions": 0,
+      "n_false": 0,
+      "false_promotion_rate_per_decision": {
+        "lower": 0.0,
+        "point": 0.0,
+        "upper": 0.0
+      },
+      "accuracy_retention_fire0_vs_v1": {
+        "lower": -31.230346373380637,
+        "mean": -31.125938081935765,
+        "upper": -31.045954385046837
+      },
+      "deployment_latency_s": {
+        "lower": 129.32110236500003,
+        "mean": 180.37425349999998,
+        "upper": 242.04338367999995
+      },
+      "detection_latency_s": {
+        "mean": 0.0
+      }
+    },
+    "B": {
+      "n_fires": 20,
+      "n_promotions": 0,
+      "n_false": 0,
+      "false_promotion_rate_per_decision": {
+        "lower": 0.0,
+        "point": 0.0,
+        "upper": 0.0
+      },
+      "accuracy_retention_fire0_vs_v1": {
+        "lower": -31.13954261172064,
+        "mean": -31.1007422762925,
+        "upper": -31.060717658075085
+      },
+      "deployment_latency_s": {
+        "lower": 112.83052057750001,
+        "mean": 132.53909134999998,
+        "upper": 153.32371538625
+      },
+      "detection_latency_s": "N/A"
+    },
+    "C": {
+      "n_fires": 10,
+      "n_promotions": 10,
+      "n_false": 6,
+      "false_promotion_rate_per_decision": {
+        "lower": 0.3126695474501864,
+        "point": 0.6,
+        "upper": 0.8318224187964902
+      },
+      "accuracy_retention_fire0_vs_v1": {
+        "lower": -31.37413315597654,
+        "mean": -31.19527233280043,
+        "upper": -31.0838963385248
+      },
+      "deployment_latency_s": {
+        "lower": 60.2149524475,
+        "mean": 72.07563889999999,
+        "upper": 85.22306968
+      },
+      "detection_latency_s": {
+        "mean": 0.0
+      },
+      "cumulative_degradation_vs_v1": {
+        "lower": -31.186357824388256,
+        "mean": -31.093667992411344,
+        "upper": -31.02204456711284,
+        "v1_rmse": 15.380746300635813,
+        "note": "final promoted model vs v1; damage persists across recurrences"
+      }
+    }
+  }
+}
